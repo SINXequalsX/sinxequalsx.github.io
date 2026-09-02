@@ -72,6 +72,27 @@
         "links": [],
         "pdfs": [],
         "items": []
+      },
+      {
+        "id": "80b405b6-1dcc-42ec-9e62-77ffacc55eb4",
+        "type": "image",
+        "tone": "white",
+        "size": "half",
+        "fontStyle": "clean",
+        "textColor": "default",
+        "eyebrow": "",
+        "title": "topological patrick",
+        "body": "",
+        "meta": "",
+        "imageSrc": "/uploads/1788357534308-patrick-efe600.jpg",
+        "imageAlt": "patrick",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
+        "items": []
       }
     ]
   },
