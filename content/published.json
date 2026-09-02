@@ -12,8 +12,8 @@
         "fontStyle": "bold",
         "textColor": "default",
         "eyebrow": "",
-        "title": "Zheng (Peter) Jiang",
-        "body": "I am a Cambridge mathematician doing Part III. I am interested in differential geometry, low-dimensional topology, gravitation and mathematical physics. ",
+        "title": "Zheng Jiang",
+        "body": "My name is Zheng Jiang, but you can also call me Peter, the Chinese character 正(Zheng) in  means integrity and honesty. The logo at the right is the cursive script of \"正\", designed by myself. \\\\\\ \\\\\\\nI am a Cambridge mathematician doing Part III. I am interested in differential geometry, low-dimensional topology, gravitation and mathematical physics.  \\\\\\\n\\\\\\\n\n\n",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
@@ -101,8 +101,8 @@
         "links": [],
         "pdfs": [],
         "items": [
-          "2026–2027|||Mathematical Tripos, Part III|||University of Cambridge · Geometry, general relativity, and analysis",
-          "2023–2026|||Mathematical Tripos, Parts IA–II|||University of Cambridge · Part II rank: 20/250 (top 8%)"
+          "Mathematical Tripos, Part III|||2026–2027 · University of Cambridge ",
+          "Mathematical Tripos, Parts IA–II, University of Cambridge |||2023–2026 ·   Part II rank: 20/250 (top 8%) "
         ]
       },
       {
@@ -125,8 +125,8 @@
         "links": [],
         "pdfs": [],
         "items": [
-          "Current|||General relativity and black holes|||Supervised by Professor Mihalis Dafermos",
-          "Previous|||Low-dimensional topology|||Handle decompositions, Morse functions, and surface topology"
+          "General relativity and black holes||| · Supervised by Professor Mihalis Dafermos",
+          "Low-dimensional topology|||Handle decompositions, Morse functions, and surface topology"
         ]
       },
       {
@@ -153,6 +153,29 @@
           "Geometric analysis",
           "Low-dimensional topology",
           "Differential geometry"
+        ]
+      },
+      {
+        "id": "5f61a07e-3033-4175-a9ea-f8ba8e13ec6c",
+        "type": "list",
+        "tone": "sky",
+        "size": "half",
+        "fontStyle": "clean",
+        "textColor": "default",
+        "eyebrow": "",
+        "title": "",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
+        "items": [
+          "First item"
         ]
       }
     ]
