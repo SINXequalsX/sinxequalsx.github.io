@@ -33,6 +33,8 @@ function validateContent(value) {
       id:cleanText(block.id,100) || `${key}-${index}`, type:types.includes(block.type) ? block.type : 'text', tone:tones.includes(block.tone) ? block.tone : 'white', size:sizes.includes(block.size) ? block.size : 'full',
       eyebrow:cleanText(block.eyebrow,300), title:cleanText(block.title,500), body:cleanText(block.body), meta:cleanText(block.meta,500), imageSrc:cleanText(block.imageSrc,1000), imageAlt:cleanText(block.imageAlt,500),
       linkLabel:cleanText(block.linkLabel,200), linkUrl:cleanText(block.linkUrl,2000), pdfLabel:cleanText(block.pdfLabel,200), pdfSrc:cleanText(block.pdfSrc,1000),
+      links:Array.isArray(block.links) ? block.links.slice(0,30).map((item,itemIndex) => ({id:cleanText(item.id,100) || `link-${itemIndex}`,label:cleanText(item.label,200),url:cleanText(item.url,2000)})) : [],
+      pdfs:Array.isArray(block.pdfs) ? block.pdfs.slice(0,30).map((item,itemIndex) => ({id:cleanText(item.id,100) || `pdf-${itemIndex}`,label:cleanText(item.label,200),src:cleanText(item.src,1000)})) : [],
       items:Array.isArray(block.items) ? block.items.slice(0,100).map(item => cleanText(item,2000)) : [],
     })) };
   }

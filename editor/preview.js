@@ -31,9 +31,11 @@ function renderBlock(raw) {
     return `<figure class="${classes}">${image}${eyebrow || title || body ? `<figcaption>${eyebrow}${title}${body}</figcaption>` : ''}</figure>`;
   }
   const list = type === 'list' ? `<div class="block-list">${renderList(raw.items)}</div>` : '';
-  const linkSource = type === 'text' ? safeLinkSource(raw.linkUrl) : '';
-  const pdfSource = type === 'text' ? safePdfSource(raw.pdfSrc) : '';
-  const actions = linkSource || pdfSource ? `<div class="block-actions">${linkSource ? `<a class="content-link" href="${linkSource}" target="_blank" rel="noopener noreferrer">${escapeHtml(raw.linkLabel || 'Open link')} <span>↗</span></a>` : ''}${pdfSource ? `<a class="content-link document-link" href="${pdfSource}" target="_blank" rel="noopener noreferrer">${escapeHtml(raw.pdfLabel || 'Open PDF')} <span>PDF</span></a>` : ''}</div>` : '';
+  const links = Array.isArray(raw.links) && raw.links.length ? raw.links : raw.linkLabel || raw.linkUrl ? [{label:raw.linkLabel,url:raw.linkUrl}] : [];
+  const pdfs = Array.isArray(raw.pdfs) && raw.pdfs.length ? raw.pdfs : raw.pdfLabel || raw.pdfSrc ? [{label:raw.pdfLabel,src:raw.pdfSrc}] : [];
+  const linkActions = type === 'text' ? links.map(item => { const source = safeLinkSource(item.url); return source ? `<a class="content-link" href="${source}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.label || 'Open link')} <span>↗</span></a>` : ''; }).join('') : '';
+  const pdfActions = type === 'text' ? pdfs.map(item => { const source = safePdfSource(item.src); return source ? `<a class="content-link document-link" href="${source}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.label || 'Open PDF')} <span>PDF</span></a>` : ''; }).join('') : '';
+  const actions = linkActions || pdfActions ? `<div class="block-actions">${linkActions}${pdfActions}</div>` : '';
   const ornament = type === 'hero' ? '<div class="clear-orbit" aria-hidden="true"><span>PJ</span></div>' : type === 'feature' ? '<div class="feature-orbit" aria-hidden="true"></div>' : '';
   return `<article class="${classes}"><div class="block-content">${eyebrow}${title}${body}${list}${meta}${actions}</div>${ornament}</article>`;
 }

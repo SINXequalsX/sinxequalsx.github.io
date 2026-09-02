@@ -27,7 +27,20 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', linkLabel:'', linkUrl:'', pdfLabel:'', pdfSrc:'', items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
+
+function normalizeAttachments(siteContent) {
+  for (const page of Object.values(siteContent)) {
+    for (const block of page.blocks) {
+      block.links = Array.isArray(block.links) ? block.links.map(link => ({id:link.id || crypto.randomUUID(),label:link.label || '',url:link.url || ''})) : [];
+      block.pdfs = Array.isArray(block.pdfs) ? block.pdfs.map(pdf => ({id:pdf.id || crypto.randomUUID(),label:pdf.label || '',src:pdf.src || ''})) : [];
+      if (!block.links.length && (block.linkLabel || block.linkUrl)) block.links.push({id:crypto.randomUUID(),label:block.linkLabel || '',url:block.linkUrl || ''});
+      if (!block.pdfs.length && (block.pdfLabel || block.pdfSrc)) block.pdfs.push({id:crypto.randomUUID(),label:block.pdfLabel || '',src:block.pdfSrc || ''});
+      block.linkLabel = ''; block.linkUrl = ''; block.pdfLabel = ''; block.pdfSrc = '';
+    }
+  }
+  return siteContent;
+}
 
 function previewState() { return {content,active,theme:document.documentElement.dataset.theme || 'light'}; }
 function syncPreview() {
@@ -94,26 +107,29 @@ function makeButton(label, title, action, disabled = false) {
 function renderTextOptions(block) {
   const options = document.createElement('div'); options.className = 'text-options wide';
   const link = document.createElement('section'); link.className = 'text-option-card';
-  link.innerHTML = '<div class="text-option-heading"><strong>Link</strong><span>Web page</span></div>';
-  link.append(
-    field('Button text',block.linkLabel,{onInput:value => block.linkLabel = value}),
-    field('Address',block.linkUrl,{onInput:value => block.linkUrl = value}),
-  );
-  if (block.linkLabel || block.linkUrl) {
-    const clear = makeButton('Remove link','Remove link',() => { block.linkLabel = ''; block.linkUrl = ''; renderBlocks(); markDirty(); }); clear.className = 'clear-attachment'; link.append(clear);
+  link.innerHTML = '<div class="text-option-heading"><strong>Links</strong><span>Web pages</span></div>';
+  const linkList = document.createElement('div'); linkList.className = 'attachment-list';
+  for (const [index,item] of block.links.entries()) {
+    const row = document.createElement('div'); row.className = 'attachment-row link-row';
+    const remove = makeButton('Remove','Remove link',() => { block.links.splice(index,1); renderBlocks(); markDirty(); }); remove.className = 'clear-attachment';
+    row.append(field('Button text',item.label,{onInput:value => item.label = value}),field('Address',item.url,{onInput:value => item.url = value}),remove); linkList.append(row);
   }
+  const addLink = makeButton('+ Add link','Add another link',() => { block.links.push({id:crypto.randomUUID(),label:'',url:''}); renderBlocks(); markDirty(); }); addLink.className = 'add-attachment';
+  link.append(linkList,addLink);
 
   const pdf = document.createElement('section'); pdf.className = 'text-option-card';
-  pdf.innerHTML = '<div class="text-option-heading"><strong>PDF</strong><span>Document</span></div>';
-  pdf.append(field('Button text',block.pdfLabel,{onInput:value => block.pdfLabel = value}));
-  const upload = document.createElement('label'); upload.className = 'compact-upload';
-  const uploadText = document.createElement('span'); uploadText.textContent = block.pdfSrc ? 'Replace PDF' : 'Attach PDF';
-  const file = document.createElement('input'); file.type = 'file'; file.accept = 'application/pdf,.pdf'; file.addEventListener('change',() => file.files[0] && uploadPdf(block,file.files[0]));
-  upload.append(uploadText,file); pdf.append(upload);
-  if (block.pdfSrc) {
-    const attached = document.createElement('small'); attached.className = 'attached-file'; attached.textContent = block.pdfSrc.split('/').pop(); pdf.append(attached);
-    const clear = makeButton('Remove PDF','Remove PDF',() => { block.pdfLabel = ''; block.pdfSrc = ''; renderBlocks(); markDirty(); }); clear.className = 'clear-attachment'; pdf.append(clear);
+  pdf.innerHTML = '<div class="text-option-heading"><strong>PDFs</strong><span>Documents</span></div>';
+  const pdfList = document.createElement('div'); pdfList.className = 'attachment-list';
+  for (const [index,item] of block.pdfs.entries()) {
+    const row = document.createElement('div'); row.className = 'attachment-row pdf-row';
+    const attached = document.createElement('small'); attached.className = 'attached-file'; attached.textContent = item.src.split('/').pop();
+    const remove = makeButton('Remove','Remove PDF',() => { block.pdfs.splice(index,1); renderBlocks(); markDirty(); }); remove.className = 'clear-attachment';
+    row.append(field('Button text',item.label,{onInput:value => item.label = value}),attached,remove); pdfList.append(row);
   }
+  const upload = document.createElement('label'); upload.className = 'compact-upload';
+  const uploadText = document.createElement('span'); uploadText.textContent = '+ Attach PDF';
+  const file = document.createElement('input'); file.type = 'file'; file.accept = 'application/pdf,.pdf'; file.addEventListener('change',() => file.files[0] && uploadPdf(block,file.files[0]));
+  upload.append(uploadText,file); pdf.append(pdfList,upload);
   options.append(link,pdf); return options;
 }
 
@@ -127,7 +143,7 @@ function renderBlock(block, index) {
   sizes.forEach(size => sizeSelect.add(new Option(size[0].toUpperCase()+size.slice(1),size,false,block.size === size))); sizeSelect.addEventListener('change',() => { block.size = sizeSelect.value; markDirty(); }); sizeLabel.append(sizeSelect);
   controls.append(toneLabel,sizeLabel,
     makeButton('↑','Move up',() => move(index,-1),index === 0), makeButton('↓','Move down',() => move(index,1),index === content[active].blocks.length-1),
-    makeButton('Duplicate','Duplicate block',() => { content[active].blocks.splice(index+1,0,{...block,id:crypto.randomUUID(),items:[...block.items]}); renderBlocks(); markDirty(); }),
+    makeButton('Duplicate','Duplicate block',() => { content[active].blocks.splice(index+1,0,{...block,id:crypto.randomUUID(),items:[...block.items],links:block.links.map(item => ({...item,id:crypto.randomUUID()})),pdfs:block.pdfs.map(item => ({...item,id:crypto.randomUUID()}))}); renderBlocks(); markDirty(); }),
   );
   const remove = makeButton('Delete','Delete block',() => { if (confirm('Delete this block?')) { content[active].blocks.splice(index,1); renderBlocks(); markDirty(); } }); remove.className = 'remove-block'; controls.append(remove); toolbar.append(controls); card.append(toolbar);
   const fields = document.createElement('div'); fields.className = 'block-fields';
@@ -174,7 +190,7 @@ async function uploadPdf(block,file) {
   try {
     const response = await fetch('/api/upload-pdf',{method:'POST',headers:authHeaders({'content-type':'application/pdf','x-file-name':encodeURIComponent(file.name)}),body:file});
     const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'PDF upload failed.');
-    block.pdfSrc = result.path; if (!block.pdfLabel) block.pdfLabel = file.name.replace(/\.pdf$/i,''); renderBlocks(); markDirty();
+    block.pdfs.push({id:crypto.randomUUID(),label:file.name.replace(/\.pdf$/i,''),src:result.path}); renderBlocks(); markDirty();
   } catch (error) { setStatus(error.message || 'PDF upload failed.','error'); } finally { setBusy(false); }
 }
 
@@ -186,5 +202,5 @@ new MutationObserver(syncPreview).observe(document.documentElement,{attributes:t
 try {
   if (!token) throw new Error('The private session token is missing. Restart npm run dev and use the URL printed in the terminal.');
   const response = await fetch('/api/content',{headers:authHeaders()}); const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'Could not load content.');
-  content = result.content; render(); setStatus(result.draft ? 'Local draft loaded.' : 'Published content loaded.');
+  content = normalizeAttachments(result.content); render(); setStatus(result.draft ? 'Local draft loaded.' : 'Published content loaded.');
 } catch (error) { setStatus(error.message,'error'); document.querySelector('.editor-panel').innerHTML = `<div class="page-settings-card"><h1>Editor unavailable</h1><p>${escapeHtml(error.message)}</p></div>`; }
