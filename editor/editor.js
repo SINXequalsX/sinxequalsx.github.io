@@ -54,7 +54,7 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, heroImageSize:300, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', titleSize:0, eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, heroImageSize:300, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
 
 function normalizeAttachments(siteContent) {
   const storedNavigation = Array.isArray(siteContent.navigation) ? siteContent.navigation : defaultTabs.map(([id,label,slug]) => ({id,label,slug}));
@@ -68,6 +68,7 @@ function normalizeAttachments(siteContent) {
       block.pdfs = Array.isArray(block.pdfs) ? block.pdfs.map(pdf => ({id:pdf.id || crypto.randomUUID(),label:pdf.label || '',src:pdf.src || ''})) : [];
       block.imageHeight = Math.min(900,Math.max(220,Number(block.imageHeight) || 400));
       block.heroImageSize = Math.min(600,Math.max(140,Number(block.heroImageSize) || 300));
+      block.titleSize = Number(block.titleSize) ? Math.min(180,Math.max(32,Number(block.titleSize))) : 0;
       if (!block.links.length && (block.linkLabel || block.linkUrl)) block.links.push({id:crypto.randomUUID(),label:block.linkLabel || '',url:block.linkUrl || ''});
       if (!block.pdfs.length && (block.pdfLabel || block.pdfSrc)) block.pdfs.push({id:crypto.randomUUID(),label:block.pdfLabel || '',src:block.pdfSrc || ''});
       if (block.type === 'list' && Array.isArray(block.items)) block.items = block.items.map(item => { const parts = String(item).split('|||'); return parts.length > 2 ? `${parts[1]}|||${parts[0]} · ${parts.slice(2).join(' · ')}` : item; });
@@ -198,6 +199,19 @@ function renderHeroImageResizer(block) {
   circle.append(image,handle); stage.append(circle,label); wrapper.append(stage); return wrapper;
 }
 
+function renderTitleSizeControl(block) {
+  const wrapper = document.createElement('div'); wrapper.className = 'title-size-control wide';
+  const heading = document.createElement('div'); heading.className = 'title-size-heading';
+  const title = document.createElement('strong'); title.textContent = 'Title size';
+  const output = document.createElement('span');
+  const defaultSize = block.type === 'hero' ? 148 : 76;
+  const slider = document.createElement('input'); slider.type = 'range'; slider.min = '32'; slider.max = '180'; slider.step = '2'; slider.value = String(block.titleSize || defaultSize);
+  const reset = makeButton('Automatic','Use responsive title sizing',() => { block.titleSize = 0; slider.value = String(defaultSize); output.textContent = 'Automatic'; markDirty(); }); reset.className = 'title-size-reset';
+  const showValue = () => { output.textContent = block.titleSize ? `${block.titleSize} px` : 'Automatic'; };
+  slider.addEventListener('input',() => { block.titleSize = Number(slider.value); showValue(); markDirty(); });
+  showValue(); heading.append(title,output); wrapper.append(heading,slider,reset); return wrapper;
+}
+
 function renderTextOptions(block) {
   const options = document.createElement('div'); options.className = 'text-options wide';
   const link = document.createElement('section'); link.className = 'text-option-card';
@@ -250,6 +264,7 @@ function renderBlock(block, index) {
     field(block.type === 'quote' ? 'Statement' : 'Title',block.title,{onInput:value => block.title = value}),
     field('Body — three backslashes make a line break',block.body,{wide:true,multiline:true,rows:4,onInput:value => block.body = value}),
   );
+  if (block.type !== 'quote') fields.append(renderTitleSizeControl(block));
   if (['hero','feature'].includes(block.type)) fields.append(field('Small label / metadata',block.meta,{wide:true,onInput:value => block.meta = value}));
   if (block.type === 'text') fields.append(renderTextOptions(block));
   if (block.type === 'list') fields.append(field('Items — one per line; use Title|||Description; three backslashes break a line inside an item',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));

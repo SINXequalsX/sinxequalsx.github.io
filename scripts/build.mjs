@@ -73,6 +73,8 @@ function renderBlock(raw) {
   const size = allowedSizes.has(raw.size) ? raw.size : 'full';
   const font = allowedFonts.has(raw.fontStyle) ? raw.fontStyle : 'clean';
   const textColor = allowedTextColors.has(raw.textColor) ? raw.textColor : 'default';
+  const titleSize = Number(raw.titleSize) ? Math.min(180, Math.max(32, Number(raw.titleSize))) : 0;
+  const titleStyle = titleSize ? `--title-size:${titleSize}px;` : '';
   const classes = `content-block block-${type} size-${size} tone-${tone} font-${font} text-${textColor}`;
   const eyebrow = raw.eyebrow ? `<p class="block-kicker">${escapeHtml(raw.eyebrow)}</p>` : '';
   const title = raw.title ? (type === 'quote' ? `<blockquote>${formatText(raw.title)}</blockquote>` : `<h2>${formatText(raw.title)}</h2>`) : '';
@@ -86,7 +88,7 @@ function renderBlock(raw) {
       ? `<img src="${src}" alt="${escapeHtml(raw.imageAlt || raw.title || '')}" loading="lazy">`
       : '<div class="image-placeholder" aria-hidden="true"><span>Image</span></div>';
     const caption = eyebrow || title || body ? `<figcaption>${eyebrow}${title}${body}</figcaption>` : '';
-    return `<figure class="${classes}" style="--image-height:${imageHeight}px">${image}${caption}</figure>`;
+    return `<figure class="${classes}" style="${titleStyle}--image-height:${imageHeight}px">${image}${caption}</figure>`;
   }
 
   const list = type === 'list' ? `<div class="block-list">${renderList(raw.items)}</div>` : '';
@@ -98,7 +100,8 @@ function renderBlock(raw) {
   const heroPhoto = safeImageSource(raw.imageSrc);
   const heroImageSize = Math.min(600, Math.max(140, Number(raw.heroImageSize) || 300));
   const ornament = type === 'hero' ? heroPhoto ? `<div class="clear-orbit hero-photo"><img src="${heroPhoto}" alt="${escapeHtml(raw.imageAlt || raw.title || 'Title photo')}"></div>` : '<div class="clear-orbit" aria-hidden="true"><span>PJ</span></div>' : type === 'feature' ? '<div class="feature-orbit" aria-hidden="true"></div>' : '';
-  const blockStyle = type === 'hero' ? ` style="--hero-photo-size:${heroImageSize}px"` : '';
+  const styleValue = `${titleStyle}${type === 'hero' ? `--hero-photo-size:${heroImageSize}px` : ''}`;
+  const blockStyle = styleValue ? ` style="${styleValue}"` : '';
   return `<article class="${classes}"${blockStyle}><div class="block-content">${eyebrow}${title}${body}${list}${meta}${actions}</div>${ornament}</article>`;
 }
 
