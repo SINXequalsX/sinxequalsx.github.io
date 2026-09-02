@@ -35,10 +35,10 @@ button, input, textarea, select { font: inherit; }
 .content-block { border: 1px solid rgba(40,75,98,.11); border-radius: 38px; box-shadow: 0 28px 72px rgba(42,75,97,.16),0 6px 18px rgba(42,75,97,.08); min-height: 400px; overflow: hidden; padding: clamp(34px,4.8vw,66px); position: relative; }
 .size-full { grid-column: 1 / -1; }.size-half { grid-column: span 6; }.size-third { grid-column: span 4; }
 .tone-white { background: rgba(255,255,255,.96); }
-.tone-sky { background: linear-gradient(145deg,#cceeff 0%,#f4fbff 62%,#bfe6fb 100%); }
-.tone-mint { background: linear-gradient(145deg,#d1f2e5 0%,#f3fff9 68%,#bfe9d9 100%); }
-.tone-lilac { background: linear-gradient(145deg,#e2d9ff 0%,#f9f7ff 68%,#d2c5ff 100%); }
-.tone-peach { background: linear-gradient(145deg,#ffdfd0 0%,#fff7f2 68%,#ffcab8 100%); }
+.tone-sky { background: linear-gradient(145deg,#c9ecfd 0%,#d9f1fc 56%,#bde4f7 100%); }
+.tone-mint { background: linear-gradient(145deg,#cfefdf 0%,#dcf3e7 56%,#bee6d4 100%); }
+.tone-lilac { background: linear-gradient(145deg,#dfd6fa 0%,#e8e1fc 56%,#d2c6f5 100%); }
+.tone-peach { background: linear-gradient(145deg,#fbdccb 0%,#fce6db 56%,#f7cab7 100%); }
 .block-kicker { color: #4c748a; font-size: .71rem; font-weight: 800; letter-spacing: .09em; margin: 0 0 20px; text-transform: uppercase; }
 .content-block h2 { font-size: clamp(2.15rem,4.3vw,4.8rem); font-weight: 670; letter-spacing: -.06em; line-height: .98; margin: 0; max-width: 850px; }
 .block-copy { color: var(--muted); font-size: clamp(.96rem,1.35vw,1.12rem); line-height: 1.72; margin: 28px 0 0; max-width: 700px; }
