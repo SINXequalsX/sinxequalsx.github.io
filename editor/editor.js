@@ -189,10 +189,11 @@ function renderBlock(block, index) {
   if (['hero','feature'].includes(block.type)) fields.append(field('Small label / metadata',block.meta,{wide:true,onInput:value => block.meta = value}));
   if (block.type === 'text') fields.append(renderTextOptions(block));
   if (block.type === 'list') fields.append(field('Items — one per line; use Title|||Description; three backslashes break a line inside an item',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
-  if (block.type === 'image') {
-    fields.append(field('Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
-    const upload = document.createElement('label'); upload.className = 'upload-zone wide'; upload.innerHTML = `<strong>Choose an image</strong><span class="upload-result">${escapeHtml(block.imageSrc || 'JPG, PNG, WebP, GIF, or AVIF · maximum 15 MB')}</span>`;
+  if (['image','hero'].includes(block.type)) {
+    fields.append(field(block.type === 'hero' ? 'Title photo description (alt text)' : 'Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
+    const upload = document.createElement('label'); upload.className = 'upload-zone wide'; upload.innerHTML = `<strong>${block.type === 'hero' ? 'Choose title photo' : 'Choose an image'}</strong><span class="upload-result">${escapeHtml(block.imageSrc || 'JPG, PNG, WebP, GIF, or AVIF · maximum 15 MB')}</span>`;
     const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp,image/gif,image/avif'; input.addEventListener('change',() => input.files[0] && uploadImage(block,input.files[0])); upload.append(input); fields.append(upload);
+    if (block.imageSrc) { const removePhoto = makeButton(block.type === 'hero' ? 'Remove title photo' : 'Remove image','Remove uploaded image',() => { block.imageSrc = ''; renderBlocks(); markDirty(); }); removePhoto.className = 'clear-attachment wide'; fields.append(removePhoto); }
   }
   card.append(fields); return card;
 }

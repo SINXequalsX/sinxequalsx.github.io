@@ -44,7 +44,8 @@ function renderBlock(raw) {
   const linkActions = type === 'text' ? links.map(item => { const source = safeLinkSource(item.url); return source ? `<a class="content-link" href="${source}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.label || 'Open link')} <span>↗</span></a>` : ''; }).join('') : '';
   const pdfActions = type === 'text' ? pdfs.map(item => { const source = safePdfSource(item.src); return source ? `<a class="content-link document-link" href="${source}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.label || 'Open PDF')} <span>PDF</span></a>` : ''; }).join('') : '';
   const actions = linkActions || pdfActions ? `<div class="block-actions">${linkActions}${pdfActions}</div>` : '';
-  const ornament = type === 'hero' ? '<div class="clear-orbit" aria-hidden="true"><span>PJ</span></div>' : type === 'feature' ? '<div class="feature-orbit" aria-hidden="true"></div>' : '';
+  const heroPhoto = safeImageSource(raw.imageSrc);
+  const ornament = type === 'hero' ? heroPhoto ? `<div class="clear-orbit hero-photo"><img src="${heroPhoto}" alt="${escapeHtml(raw.imageAlt || raw.title || 'Title photo')}"></div>` : '<div class="clear-orbit" aria-hidden="true"><span>PJ</span></div>' : type === 'feature' ? '<div class="feature-orbit" aria-hidden="true"></div>' : '';
   return `<article class="${classes}"><div class="block-content">${eyebrow}${title}${body}${list}${meta}${actions}</div>${ornament}</article>`;
 }
 
