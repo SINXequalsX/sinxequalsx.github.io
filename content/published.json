@@ -2,7 +2,7 @@
   "navigation": [
     {
       "id": "intro",
-      "label": "Introduction",
+      "label": "Intro",
       "slug": ""
     },
     {
@@ -29,7 +29,7 @@
   "intro": {
     "title": "Zheng Jiang",
     "intro": "Geometry, Topology, Gravitation, Analysis",
-    "backgroundImage": "",
+    "backgroundImage": "/uploads/1788366564363-bg-84fc3c.jpg",
     "blocks": [
       {
         "id": "intro-hero",
@@ -93,7 +93,7 @@
         "meta": "",
         "imageSrc": "/uploads/1788357534308-patrick-efe600.jpg",
         "imageAlt": "patrick",
-        "imageHeight": 458,
+        "imageHeight": 443,
         "heroImageSize": 300,
         "linkLabel": "",
         "linkUrl": "",
