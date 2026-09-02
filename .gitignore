@@ -1,0 +1,7 @@
+node_modules/
+dist/
+content/draft.json
+.env
+.env.*
+.DS_Store
+Thumbs.db

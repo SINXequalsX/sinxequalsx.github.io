@@ -1,0 +1,9 @@
+{
+  "name": "peter-jiang-academic-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/editor.mjs",
+    "build": "node scripts/build.mjs"
+  }
+}

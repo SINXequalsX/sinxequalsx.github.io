@@ -1,0 +1,199 @@
+{
+  "intro": {
+    "title": "Peter Jiang",
+    "intro": "Geometry, topology & gravitation.",
+    "blocks": [
+      {
+        "id": "intro-hero",
+        "type": "hero",
+        "tone": "sky",
+        "size": "full",
+        "eyebrow": "Mathematics · University of Cambridge",
+        "title": "Peter Jiang",
+        "body": "I am a Cambridge mathematician preparing for Part III, interested in the geometric structures behind black holes and low-dimensional manifolds.",
+        "meta": "PhD applicant · 2027 entry",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      },
+      {
+        "id": "intro-focus",
+        "type": "feature",
+        "tone": "mint",
+        "size": "half",
+        "eyebrow": "Current focus",
+        "title": "Black-hole spacetimes",
+        "body": "Geometric questions in mathematical general relativity.",
+        "meta": "With Professor Mihalis Dafermos",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      },
+      {
+        "id": "intro-topology",
+        "type": "feature",
+        "tone": "lilac",
+        "size": "half",
+        "eyebrow": "Research direction",
+        "title": "Low-dimensional topology",
+        "body": "Handle decompositions, Morse functions, surfaces, and manifolds.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      },
+      {
+        "id": "intro-profile",
+        "type": "text",
+        "tone": "white",
+        "size": "full",
+        "eyebrow": "Academic profile",
+        "title": "Geometry connects the questions I care about.",
+        "body": "From black-hole spacetimes to the topology of manifolds, I am interested in how global structure emerges from local geometric information.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      }
+    ]
+  },
+  "notes": {
+    "title": "Mathematical notes",
+    "intro": "Reading notes, calculations, and short expositions from geometry, topology, and mathematical relativity.",
+    "blocks": [
+      {
+        "id": "notes-kirby",
+        "type": "feature",
+        "tone": "sky",
+        "size": "half",
+        "eyebrow": "Reading notes · In preparation",
+        "title": "The Kirby torus trick for surfaces",
+        "body": "Notes on the geometric ideas behind the torus trick and its role in surface topology.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      },
+      {
+        "id": "notes-black-hole",
+        "type": "feature",
+        "tone": "mint",
+        "size": "half",
+        "eyebrow": "Project notebook · In progress",
+        "title": "Black-hole geometry",
+        "body": "Selected definitions and calculations arising from current work in mathematical general relativity.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      }
+    ]
+  },
+  "cv": {
+    "title": "Curriculum vitae",
+    "intro": "My academic background and current research trajectory in geometry, topology, and mathematical general relativity.",
+    "blocks": [
+      {
+        "id": "cv-education",
+        "type": "list",
+        "tone": "sky",
+        "size": "half",
+        "eyebrow": "Academic profile",
+        "title": "Education",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": [
+          "2026–2027|||Mathematical Tripos, Part III|||University of Cambridge · Geometry, general relativity, and analysis",
+          "2023–2026|||Mathematical Tripos, Parts IA–II|||University of Cambridge · Part II rank: 20/250 (top 8%)"
+        ]
+      },
+      {
+        "id": "cv-research",
+        "type": "list",
+        "tone": "mint",
+        "size": "half",
+        "eyebrow": "Experience",
+        "title": "Research",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": [
+          "Current|||General relativity and black holes|||Supervised by Professor Mihalis Dafermos",
+          "Previous|||Low-dimensional topology|||Handle decompositions, Morse functions, and surface topology"
+        ]
+      },
+      {
+        "id": "cv-interests",
+        "type": "list",
+        "tone": "lilac",
+        "size": "full",
+        "eyebrow": "Research interests",
+        "title": "Questions and fields",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": [
+          "Mathematical general relativity",
+          "Geometric analysis",
+          "Low-dimensional topology",
+          "Differential geometry"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Research projects",
+    "intro": "Questions I have explored through supervised research and independent reading.",
+    "blocks": [
+      {
+        "id": "project-black-holes",
+        "type": "feature",
+        "tone": "sky",
+        "size": "full",
+        "eyebrow": "Current project",
+        "title": "Geometry of black holes",
+        "body": "A project in mathematical general relativity under Professor Mihalis Dafermos. The work develops geometric and analytic tools for understanding black-hole spacetimes and the global behaviour of solutions to the Einstein equations.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      },
+      {
+        "id": "project-handles",
+        "type": "feature",
+        "tone": "mint",
+        "size": "full",
+        "eyebrow": "Previous project",
+        "title": "Handle decompositions and Morse functions",
+        "body": "An investigation in low-dimensional topology, centred on surfaces and geometric decompositions, including Allen Hatcher’s treatment of the Kirby torus trick.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      }
+    ]
+  },
+  "photos": {
+    "title": "Photos",
+    "intro": "A visual notebook for places, seminars, blackboards, and moments alongside mathematics.",
+    "blocks": [
+      {
+        "id": "photos-empty",
+        "type": "quote",
+        "tone": "sky",
+        "size": "full",
+        "eyebrow": "Visual notebook",
+        "title": "A space for moments around the mathematics.",
+        "body": "Photos can be added from the local editor whenever you are ready.",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "items": []
+      }
+    ]
+  }
+}
