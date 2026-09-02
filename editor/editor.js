@@ -16,6 +16,7 @@ const previewFrame = document.querySelector('#live-preview');
 const previewChannel = 'BroadcastChannel' in window ? new BroadcastChannel('peter-editor-preview') : null;
 const pageTabs = document.querySelector('#page-tabs');
 const pageSettings = document.querySelector('#page-settings');
+const backgroundSettings = document.querySelector('#background-settings');
 const blockList = document.querySelector('#block-list');
 const editorStage = document.querySelector('.editor-stage');
 const previewResizer = document.querySelector('#preview-resizer');
@@ -107,6 +108,23 @@ function renderSettings() {
   );
 }
 
+function renderBackgroundSettings() {
+  const page = content[active];
+  const heading = document.createElement('div'); heading.className = 'background-settings-heading';
+  heading.innerHTML = '<div><strong>Background photo</strong><span>Behind the boxes on this page</span></div>';
+  const actions = document.createElement('div'); actions.className = 'background-settings-actions';
+  const upload = document.createElement('label'); upload.className = 'background-upload'; upload.textContent = page.backgroundImage ? 'Replace photo' : 'Choose photo';
+  const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp,image/gif,image/avif'; input.addEventListener('change',() => input.files[0] && uploadBackground(input.files[0])); upload.append(input); actions.append(upload);
+  if (page.backgroundImage) {
+    const remove = makeButton('Remove','Remove page background',() => { page.backgroundImage = ''; renderBackgroundSettings(); markDirty(); }); remove.className = 'background-remove'; actions.append(remove);
+  }
+  heading.append(actions); backgroundSettings.replaceChildren(heading);
+  if (page.backgroundImage) {
+    const preview = document.createElement('div'); preview.className = 'background-photo-preview';
+    const image = document.createElement('img'); image.src = page.backgroundImage; image.alt = 'Current page background'; preview.append(image); backgroundSettings.append(preview);
+  }
+}
+
 function renderPicker(index) {
   const holder = document.createElement('div'); holder.className = 'block-inserter';
   const add = document.createElement('button'); add.className = 'add-block-square'; add.type = 'button'; add.textContent = '+'; add.setAttribute('aria-label',`Add block at position ${index + 1}`);
@@ -189,7 +207,7 @@ function renderBlock(block, index) {
 
 function move(index, delta) { const blocks = content[active].blocks, target = index + delta; if (target < 0 || target >= blocks.length) return; [blocks[index],blocks[target]] = [blocks[target],blocks[index]]; renderBlocks(); markDirty(); }
 function renderBlocks() { const nodes = []; content[active].blocks.forEach((block,index) => nodes.push(renderPicker(index),renderBlock(block,index))); nodes.push(renderPicker(content[active].blocks.length)); blockList.replaceChildren(...nodes); }
-function render() { renderTabs(); document.querySelector('#active-page-name').textContent = active === 'intro' ? 'Introduction' : content[active].title || tabs.find(tab => tab[0] === active)[1]; renderSettings(); renderBlocks(); syncPreview(); }
+function render() { renderTabs(); document.querySelector('#active-page-name').textContent = active === 'intro' ? 'Introduction' : content[active].title || tabs.find(tab => tab[0] === active)[1]; renderSettings(); renderBackgroundSettings(); renderBlocks(); syncPreview(); }
 
 async function save(publish) {
   if (busy) return; setBusy(true); setStatus(publish ? 'Building the site and synchronizing it with GitHub…' : 'Saving the draft on this computer…');
@@ -206,6 +224,15 @@ async function uploadImage(block,file) {
     const response = await fetch('/api/upload',{method:'POST',headers:authHeaders({'content-type':file.type,'x-file-name':encodeURIComponent(file.name)}),body:file});
     const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'Upload failed.');
     block.imageSrc = result.path; if (!block.imageAlt) block.imageAlt = file.name.replace(/\.[^.]+$/,''); renderBlocks(); markDirty();
+  } catch (error) { setStatus(error.message || 'Upload failed.','error'); } finally { setBusy(false); }
+}
+
+async function uploadBackground(file) {
+  if (busy) return; const pageKey = active; setBusy(true); setStatus('Copying background photo into the project…');
+  try {
+    const response = await fetch('/api/upload',{method:'POST',headers:authHeaders({'content-type':file.type,'x-file-name':encodeURIComponent(file.name)}),body:file});
+    const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'Upload failed.');
+    content[pageKey].backgroundImage = result.path; if (active === pageKey) renderBackgroundSettings(); markDirty();
   } catch (error) { setStatus(error.message || 'Upload failed.','error'); } finally { setBusy(false); }
 }
 
@@ -226,5 +253,7 @@ new MutationObserver(syncPreview).observe(document.documentElement,{attributes:t
 try {
   if (!token) throw new Error('The private session token is missing. Restart npm run dev and use the URL printed in the terminal.');
   const response = await fetch('/api/content',{headers:authHeaders()}); const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'Could not load content.');
-  content = normalizeAttachments(result.content); render(); setStatus(result.draft ? 'Local draft loaded.' : 'Published content loaded.');
+  let browserDraft = null; try { browserDraft = JSON.parse(localStorage.getItem('peter-live-preview') || 'null')?.content; } catch {}
+  const hasBrowserDraft = browserDraft && tabs.every(([key]) => Array.isArray(browserDraft[key]?.blocks));
+  content = normalizeAttachments(hasBrowserDraft ? browserDraft : result.content); render(); setStatus(hasBrowserDraft ? 'Your current local draft was recovered.' : result.draft ? 'Local draft loaded.' : 'Published content loaded.');
 } catch (error) { setStatus(error.message,'error'); document.querySelector('.editor-panel').innerHTML = `<div class="page-settings-card"><h1>Editor unavailable</h1><p>${escapeHtml(error.message)}</p></div>`; }

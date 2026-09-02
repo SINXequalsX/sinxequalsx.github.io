@@ -29,6 +29,11 @@ function safeImageSource(value = '') {
   return '';
 }
 
+function safeBackgroundSource(value = '') {
+  const source = String(value).trim();
+  return /^\/uploads\/[a-zA-Z0-9._-]+$/.test(source) ? source : '';
+}
+
 function safeLinkSource(value = '') {
   const source = String(value).trim();
   if (/^https?:\/\//i.test(source) || /^mailto:/i.test(source) || /^\/(?!\/)[a-zA-Z0-9/_-]*$/.test(source)) return escapeHtml(source);
@@ -90,6 +95,9 @@ function renderPage(key, page) {
   const blocks = Array.isArray(page.blocks) ? page.blocks.map(renderBlock).join('') : '';
   const canonical = key === 'intro' ? 'https://sinxequalsx.github.io/' : `https://sinxequalsx.github.io/${key}/`;
   const description = page.intro || 'Peter Jiang — mathematics, geometry, topology, and gravitation.';
+  const backgroundImage = safeBackgroundSource(page.backgroundImage);
+  const backgroundClass = backgroundImage ? ' has-page-background' : '';
+  const backgroundStyle = backgroundImage ? ` style="--page-background-image:url('${backgroundImage}')"` : '';
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -108,7 +116,7 @@ function renderPage(key, page) {
   <title>${escapeHtml(page.title)} · Peter Jiang</title>
 </head>
 <body>
-  <main class="fresh-site">${renderNav(key)}<div class="page-canvas">${pageHeader}<section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div></main>
+  <main class="fresh-site${backgroundClass}"${backgroundStyle}>${renderNav(key)}<div class="page-canvas">${pageHeader}<section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div></main>
 </body>
 </html>`;
 }

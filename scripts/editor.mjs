@@ -29,7 +29,7 @@ function validateContent(value) {
   const output = {};
   for (const key of pages) {
     const page = value[key]; if (!page || typeof page !== 'object' || !Array.isArray(page.blocks)) throw new Error(`Page ${key} is invalid.`);
-    output[key] = { title:cleanText(page.title,200), intro:cleanText(page.intro,1000), blocks:page.blocks.slice(0,100).map((block,index) => ({
+    output[key] = { title:cleanText(page.title,200), intro:cleanText(page.intro,1000), backgroundImage:cleanText(page.backgroundImage,1000), blocks:page.blocks.slice(0,100).map((block,index) => ({
       id:cleanText(block.id,100) || `${key}-${index}`, type:types.includes(block.type) ? block.type : 'text', tone:tones.includes(block.tone) ? block.tone : 'white', size:sizes.includes(block.size) ? block.size : 'full',
       eyebrow:cleanText(block.eyebrow,300), title:cleanText(block.title,500), body:cleanText(block.body), meta:cleanText(block.meta,500), imageSrc:cleanText(block.imageSrc,1000), imageAlt:cleanText(block.imageAlt,500),
       linkLabel:cleanText(block.linkLabel,200), linkUrl:cleanText(block.linkUrl,2000), pdfLabel:cleanText(block.pdfLabel,200), pdfSrc:cleanText(block.pdfSrc,1000),
