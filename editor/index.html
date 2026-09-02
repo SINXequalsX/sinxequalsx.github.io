@@ -23,14 +23,30 @@
       <aside class="editor-sidebar">
         <p>Pages</p>
         <div id="page-tabs"></div>
-        <a class="view-site" href="/" target="_blank">Preview public site ↗</a>
+        <a class="view-site" href="https://sinxequalsx.github.io" target="_blank" rel="noreferrer">Open public site ↗</a>
       </aside>
-      <section class="editor-panel">
-        <div class="local-editor-banner"><div><strong>Local and private</strong><span>Drafts stay on this computer. Publish commits only your finished content and images.</span></div><span class="security-dot">Loopback protected</span></div>
-        <div class="editor-heading"><p>Modular page</p><h1 id="active-page-name">Introduction</h1><span>Use the square + buttons to insert a new block anywhere.</span></div>
-        <div id="page-settings" class="page-settings-card"></div>
-        <div id="block-list" class="block-editor-list"></div>
-      </section>
+      <div class="editor-stage">
+        <section class="editor-panel">
+          <div class="local-editor-banner"><div><strong>Local and private</strong><span>Your draft preview updates immediately. Nothing becomes public until you publish.</span></div><span class="security-dot">Loopback protected</span></div>
+          <div id="save-feedback" class="save-feedback" data-kind="idle">
+            <span class="feedback-light" aria-hidden="true"></span>
+            <div><strong>Editor ready</strong><small>Changes appear in the preview before they are saved.</small></div>
+          </div>
+          <div class="editor-heading"><p>Modular page</p><h1 id="active-page-name">Introduction</h1><span>Use the square + buttons to insert a new block anywhere.</span></div>
+          <div id="page-settings" class="page-settings-card"></div>
+          <div id="block-list" class="block-editor-list"></div>
+        </section>
+        <aside class="preview-panel" aria-label="Live draft preview">
+          <header class="preview-toolbar">
+            <div><span class="live-dot"></span><strong>Live draft preview</strong><small>Unsaved changes included</small></div>
+            <div class="preview-links">
+              <a href="/editor/preview.html" target="_blank">Open local ↗</a>
+              <a href="https://sinxequalsx.github.io" target="_blank" rel="noreferrer">Open public ↗</a>
+            </div>
+          </header>
+          <div class="preview-frame-shell"><iframe id="live-preview" src="/editor/preview.html" title="Live preview of the current draft"></iframe></div>
+        </aside>
+      </div>
     </div>
   </main>
   <template id="picker-template">

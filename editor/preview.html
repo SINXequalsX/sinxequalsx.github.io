@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live draft preview · Peter Jiang</title>
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .preview-empty { align-items:center;display:flex;justify-content:center;min-height:100vh;padding:40px;text-align:center; }
+    .preview-empty div { background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:28px;max-width:520px;padding:38px; }
+    .preview-empty h1 { font-size:2rem;letter-spacing:-.05em;margin:0 0 12px; }.preview-empty p { color:var(--muted);line-height:1.6;margin:0; }
+  </style>
+</head>
+<body>
+  <main id="preview-root" class="preview-empty"><div><h1>Connecting to the editor…</h1><p>Your current draft will appear here automatically.</p></div></main>
+  <script type="module" src="/editor/preview.js"></script>
+</body>
+</html>

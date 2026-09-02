@@ -59,13 +59,18 @@ const server = createServer(async (request,response) => {
       if (request.method === 'POST' && ['/api/draft','/api/publish'].includes(url.pathname)) {
         const data = validateContent(JSON.parse((await readBody(request,4*1024*1024)).toString('utf8')));
         await atomicWrite(path.join(root,'content','draft.json'),data);
-        if (url.pathname === '/api/draft') return json(response,200,{message:`Draft saved locally at ${new Date().toLocaleTimeString()}.`});
+        if (url.pathname === '/api/draft') {
+          const savedAt = new Date();
+          return json(response,200,{message:`Draft saved locally at ${savedAt.toLocaleTimeString()}. The public site is unchanged.`,savedAt:savedAt.toISOString()});
+        }
         await atomicWrite(path.join(root,'content','published.json'),data); build();
         try {
           gitCommand(['add','content/published.json','public']);
           if (gitCommand(['diff','--cached','--name-only'])) gitCommand(['commit','-m',`Publish website update ${new Date().toISOString().slice(0,10)}`]);
           gitCommand(['-c','http.version=HTTP/1.1','push','origin','main']);
-          return json(response,200,{message:'Published to GitHub. GitHub Pages will update in about one minute.'});
+          const commit = gitCommand(['rev-parse','--short','HEAD']);
+          const publishedAt = new Date();
+          return json(response,200,{message:`Published commit ${commit} to GitHub at ${publishedAt.toLocaleTimeString()}. The public site normally updates within one minute.`,commit,publishedAt:publishedAt.toISOString(),liveUrl:'https://sinxequalsx.github.io'});
         } catch (error) { return json(response,502,{error:`The site was built and committed locally, but GitHub push needs attention: ${String(error.stderr || error.message).trim()}`}); }
       }
       if (request.method === 'POST' && url.pathname === '/api/upload') {
