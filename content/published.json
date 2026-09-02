@@ -1,4 +1,31 @@
 {
+  "navigation": [
+    {
+      "id": "intro",
+      "label": "Introduction",
+      "slug": ""
+    },
+    {
+      "id": "notes",
+      "label": "Notes",
+      "slug": "notes"
+    },
+    {
+      "id": "cv",
+      "label": "CV",
+      "slug": "cv"
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "slug": "projects"
+    },
+    {
+      "id": "photos",
+      "label": "Photos",
+      "slug": "photos"
+    }
+  ],
   "intro": {
     "title": "Zheng Jiang",
     "intro": "Geometry, Topology, Gravitation, Analysis",
