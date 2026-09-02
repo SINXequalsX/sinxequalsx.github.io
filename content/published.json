@@ -4,16 +4,41 @@
     "intro": "Geometry, Topology, Gravitation, Analysis",
     "blocks": [
       {
+        "id": "5d0f3b41-784e-4677-9d14-cd484d569890",
+        "type": "text",
+        "tone": "sky",
+        "size": "half",
+        "eyebrow": "",
+        "title": "",
+        "body": "aaa",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
+        "items": []
+      },
+      {
         "id": "intro-hero",
         "type": "hero",
         "tone": "sky",
         "size": "full",
-        "eyebrow": "Mathematics · University of Cambridge",
-        "title": "Zheng is BS",
+        "eyebrow": "",
+        "title": "Zheng (Peter) Jiang",
         "body": "I am a Cambridge mathematician preparing for Part III",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       },
       {
@@ -27,19 +52,31 @@
         "meta": "With Professor Mihalis Dafermos",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       },
       {
         "id": "intro-topology",
         "type": "feature",
         "tone": "lilac",
-        "size": "half",
+        "size": "full",
         "eyebrow": "Research direction",
-        "title": "Low-dimensional topology",
+        "title": "",
         "body": "Handle decompositions, Morse functions, surfaces, and manifolds.",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       },
       {
@@ -53,6 +90,18 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [
+          {
+            "id": "f1259c84-3159-454d-9db8-ae226a6b4053",
+            "label": "uniqueness theorem",
+            "src": "/uploads/1788345270931-uniqueness-theorem-3890b6.pdf"
+          }
+        ],
         "items": []
       }
     ]
@@ -72,6 +121,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       },
       {
@@ -85,6 +140,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       }
     ]
@@ -104,6 +165,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": [
           "2026–2027|||Mathematical Tripos, Part III|||University of Cambridge · Geometry, general relativity, and analysis",
           "2023–2026|||Mathematical Tripos, Parts IA–II|||University of Cambridge · Part II rank: 20/250 (top 8%)"
@@ -120,6 +187,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": [
           "Current|||General relativity and black holes|||Supervised by Professor Mihalis Dafermos",
           "Previous|||Low-dimensional topology|||Handle decompositions, Morse functions, and surface topology"
@@ -136,6 +209,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": [
           "Mathematical general relativity",
           "Geometric analysis",
@@ -160,6 +239,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       },
       {
@@ -173,6 +258,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       }
     ]
@@ -192,6 +283,12 @@
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
         "items": []
       }
     ]
