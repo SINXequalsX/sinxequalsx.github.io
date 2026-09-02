@@ -15,7 +15,6 @@ const feedbackElement = document.querySelector('#save-feedback');
 const previewFrame = document.querySelector('#live-preview');
 const previewChannel = 'BroadcastChannel' in window ? new BroadcastChannel('peter-editor-preview') : null;
 const pageTabs = document.querySelector('#page-tabs');
-const pageSettings = document.querySelector('#page-settings');
 const backgroundSettings = document.querySelector('#background-settings');
 const blockList = document.querySelector('#block-list');
 const editorStage = document.querySelector('.editor-stage');
@@ -92,20 +91,6 @@ function renderTabs() {
     button.innerHTML = `<span>${label[0]}</span>${label}`;
     button.addEventListener('click', () => { active = key; openPicker = null; render(); }); return button;
   }));
-}
-
-function renderSettings() {
-  const page = content[active];
-  if (active === 'intro') {
-    pageSettings.hidden = true;
-    pageSettings.replaceChildren();
-    return;
-  }
-  pageSettings.hidden = false;
-  pageSettings.replaceChildren(
-    field('Page title', page.title, {onInput:value => { page.title = value; document.querySelector('#active-page-name').textContent = value || tabs.find(tab => tab[0] === active)[1]; }}),
-    field('Short introduction', page.intro, {multiline:true,rows:2,onInput:value => page.intro = value}),
-  );
 }
 
 function renderBackgroundSettings() {
@@ -207,7 +192,7 @@ function renderBlock(block, index) {
 
 function move(index, delta) { const blocks = content[active].blocks, target = index + delta; if (target < 0 || target >= blocks.length) return; [blocks[index],blocks[target]] = [blocks[target],blocks[index]]; renderBlocks(); markDirty(); }
 function renderBlocks() { const nodes = []; content[active].blocks.forEach((block,index) => nodes.push(renderPicker(index),renderBlock(block,index))); nodes.push(renderPicker(content[active].blocks.length)); blockList.replaceChildren(...nodes); }
-function render() { renderTabs(); document.querySelector('#active-page-name').textContent = active === 'intro' ? 'Introduction' : content[active].title || tabs.find(tab => tab[0] === active)[1]; renderSettings(); renderBackgroundSettings(); renderBlocks(); syncPreview(); }
+function render() { renderTabs(); document.querySelector('#active-page-name').textContent = tabs.find(tab => tab[0] === active)[1]; renderBackgroundSettings(); renderBlocks(); syncPreview(); }
 
 async function save(publish) {
   if (busy) return; setBusy(true); setStatus(publish ? 'Building the site and synchronizing it with GitHub…' : 'Saving the draft on this computer…');

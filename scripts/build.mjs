@@ -91,7 +91,6 @@ function renderNav(active) {
 }
 
 function renderPage(key, page) {
-  const pageHeader = key === 'intro' ? '' : `<header class="page-title-block tone-white"><p class="block-kicker">${key === 'cv' ? 'Academic profile' : key === 'photos' ? 'Visual notebook' : 'Peter Jiang'}</p><h1>${escapeHtml(page.title)}</h1><p>${escapeHtml(page.intro)}</p></header>`;
   const blocks = Array.isArray(page.blocks) ? page.blocks.map(renderBlock).join('') : '';
   const canonical = key === 'intro' ? 'https://sinxequalsx.github.io/' : `https://sinxequalsx.github.io/${key}/`;
   const description = page.intro || 'Peter Jiang — mathematics, geometry, topology, and gravitation.';
@@ -116,7 +115,7 @@ function renderPage(key, page) {
   <title>${escapeHtml(page.title)} · Peter Jiang</title>
 </head>
 <body>
-  <main class="fresh-site${backgroundClass}"${backgroundStyle}>${renderNav(key)}<div class="page-canvas">${pageHeader}<section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div></main>
+  <main class="fresh-site${backgroundClass}"${backgroundStyle}>${renderNav(key)}<div class="page-canvas"><section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div></main>
 </body>
 </html>`;
 }
