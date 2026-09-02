@@ -1,7 +1,7 @@
 {
   "intro": {
-    "title": "Peter Jiang",
-    "intro": "Geometry, topology & gravitation.",
+    "title": "Zheng (Peter) Jiang ",
+    "intro": "Geometry, Topology, Gravitation, Analysis",
     "blocks": [
       {
         "id": "intro-hero",
@@ -9,9 +9,9 @@
         "tone": "sky",
         "size": "full",
         "eyebrow": "Mathematics · University of Cambridge",
-        "title": "Peter Jiang",
-        "body": "I am a Cambridge mathematician preparing for Part III, interested in the geometric structures behind black holes and low-dimensional manifolds.",
-        "meta": "PhD applicant · 2027 entry",
+        "title": "",
+        "body": "I am a Cambridge mathematician preparing for Part III",
+        "meta": "",
         "imageSrc": "",
         "imageAlt": "",
         "items": []
