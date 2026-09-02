@@ -204,12 +204,22 @@ function renderTitleSizeControl(block) {
   const heading = document.createElement('div'); heading.className = 'title-size-heading';
   const title = document.createElement('strong'); title.textContent = 'Title size';
   const output = document.createElement('span');
-  const defaultSize = block.type === 'hero' ? 148 : 76;
-  const slider = document.createElement('input'); slider.type = 'range'; slider.min = '32'; slider.max = '180'; slider.step = '2'; slider.value = String(block.titleSize || defaultSize);
-  const reset = makeButton('Automatic','Use responsive title sizing',() => { block.titleSize = 0; slider.value = String(defaultSize); output.textContent = 'Automatic'; markDirty(); }); reset.className = 'title-size-reset';
-  const showValue = () => { output.textContent = block.titleSize ? `${block.titleSize} px` : 'Automatic'; };
-  slider.addEventListener('input',() => { block.titleSize = Number(slider.value); showValue(); markDirty(); });
-  showValue(); heading.append(title,output); wrapper.append(heading,slider,reset); return wrapper;
+  const effectiveAutomaticSize = () => {
+    const width = previewFrame.contentWindow?.innerWidth || Math.max(320,window.innerWidth * .55);
+    return Math.round(block.type === 'hero' ? Math.min(147.2,Math.max(75.2,width * .095)) : Math.min(76.8,Math.max(34.4,width * .043)));
+  };
+  const controls = document.createElement('div'); controls.className = 'title-size-input-row';
+  const slider = document.createElement('input'); slider.type = 'range'; slider.min = '32'; slider.max = '180'; slider.step = '1';
+  const number = document.createElement('input'); number.type = 'number'; number.min = '32'; number.max = '180'; number.step = '1'; number.setAttribute('aria-label','Title size in pixels');
+  const reset = makeButton('Use automatic','Use responsive title sizing',() => { block.titleSize = 0; setAutomaticPosition(); markDirty(); }); reset.className = 'title-size-reset';
+  const setAutomaticPosition = () => { const value = effectiveAutomaticSize(); slider.value = String(value); number.value = String(value); output.textContent = `Automatic · ${value} px here`; reset.classList.add('active'); };
+  const setManual = (value,notify = true) => { const bounded = Math.min(180,Math.max(32,Math.round(Number(value) || 32))); block.titleSize = bounded; slider.value = String(bounded); number.value = String(bounded); output.textContent = `${bounded} px · Manual`; reset.classList.remove('active'); if (notify) markDirty(); };
+  if (block.titleSize) setManual(block.titleSize,false); else setAutomaticPosition();
+  slider.addEventListener('pointerdown',() => { if (!block.titleSize) { const value = effectiveAutomaticSize(); slider.value = String(value); number.value = String(value); } });
+  slider.addEventListener('input',() => setManual(slider.value));
+  number.addEventListener('input',() => { if (number.value !== '') setManual(number.value); });
+  number.addEventListener('change',() => setManual(number.value || effectiveAutomaticSize()));
+  heading.append(title,output); controls.append(slider,number); wrapper.append(heading,controls,reset); return wrapper;
 }
 
 function renderTextOptions(block) {
