@@ -1,7 +1,8 @@
 const token = new URLSearchParams(location.search).get('token') || sessionStorage.getItem('peter-editor-token') || '';
 if (token) sessionStorage.setItem('peter-editor-token', token);
 
-const tabs = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
+const defaultTabs = [['intro','Introduction',''],['notes','Notes','notes'],['cv','CV','cv'],['projects','Projects','projects'],['photos','Photos','photos']];
+let tabs = defaultTabs.map(item => [...item]);
 const blockChoices = [
   ['hero','Title'],['text','Text'],['image','Photo'],
   ['quote','Quote'],['list','List'],
@@ -56,7 +57,12 @@ function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
 function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
 
 function normalizeAttachments(siteContent) {
-  for (const page of Object.values(siteContent)) {
+  const storedNavigation = Array.isArray(siteContent.navigation) ? siteContent.navigation : defaultTabs.map(([id,label,slug]) => ({id,label,slug}));
+  tabs = storedNavigation.filter(item => item && siteContent[item.id]?.blocks).map(item => [item.id,item.label || 'Untitled',item.slug || '']);
+  if (!tabs.length) tabs = defaultTabs.filter(([id]) => siteContent[id]?.blocks).map(item => [...item]);
+  siteContent.navigation = tabs.map(([id,label,slug]) => ({id,label,slug}));
+  for (const [key] of tabs) {
+    const page = siteContent[key];
     for (const block of page.blocks) {
       block.links = Array.isArray(block.links) ? block.links.map(link => ({id:link.id || crypto.randomUUID(),label:link.label || '',url:link.url || ''})) : [];
       block.pdfs = Array.isArray(block.pdfs) ? block.pdfs.map(pdf => ({id:pdf.id || crypto.randomUUID(),label:pdf.label || '',src:pdf.src || ''})) : [];
@@ -89,11 +95,32 @@ function field(label, value, options = {}) {
 }
 
 function renderTabs() {
-  pageTabs.replaceChildren(...tabs.map(([key,label]) => {
+  const buttons = tabs.map(([key,label]) => {
     const button = document.createElement('button'); button.type = 'button'; button.className = active === key ? 'selected' : '';
     button.innerHTML = `<span>${label[0]}</span>${label}`;
     button.addEventListener('click', () => { active = key; openPicker = null; render(); }); return button;
-  }));
+  });
+  const addPage = makeButton('+','Add a new page',createPage); addPage.className = 'page-add-button'; addPage.setAttribute('aria-label','Add a new page');
+  const renamePage = makeButton('Rename','Rename this page',renameActivePage); renamePage.className = 'page-rename-button';
+  pageTabs.replaceChildren(...buttons,addPage,renamePage);
+}
+
+function pageSlug(label) {
+  const base = String(label).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50) || 'page';
+  const used = new Set(tabs.map(tab => tab[2])); let candidate = base, number = 2;
+  while (used.has(candidate)) candidate = `${base}-${number++}`; return candidate;
+}
+function createPage() {
+  const label = prompt('Name this page:','New page')?.trim(); if (!label) return;
+  const id = `page-${crypto.randomUUID().slice(0,8)}`, slug = pageSlug(label), titleBlock = newBlock('hero'); titleBlock.title = label;
+  content[id] = {title:label,intro:'',backgroundImage:'',blocks:[titleBlock]}; tabs.push([id,label,slug]); content.navigation = tabs.map(([pageId,pageLabel,pagePath]) => ({id:pageId,label:pageLabel,slug:pagePath}));
+  active = id; openPicker = null; render(); markDirty();
+}
+function renameActivePage() {
+  const tab = tabs.find(item => item[0] === active); if (!tab) return;
+  const oldLabel = tab[1], label = prompt('Rename this page:',oldLabel)?.trim(); if (!label || label === oldLabel) return;
+  tab[1] = label; if (!content[active].title || content[active].title === oldLabel) content[active].title = label;
+  content.navigation = tabs.map(([id,pageLabel,slug]) => ({id,label:pageLabel,slug})); render(); markDirty();
 }
 
 function renderBackgroundSettings() {
@@ -200,7 +227,7 @@ function renderBlock(block, index) {
 
 function move(index, delta) { const blocks = content[active].blocks, target = index + delta; if (target < 0 || target >= blocks.length) return; [blocks[index],blocks[target]] = [blocks[target],blocks[index]]; renderBlocks(); markDirty(); }
 function renderBlocks() { const nodes = []; content[active].blocks.forEach((block,index) => nodes.push(renderPicker(index),renderBlock(block,index))); nodes.push(renderPicker(content[active].blocks.length)); blockList.replaceChildren(...nodes); }
-function render() { renderTabs(); document.querySelector('#active-page-name').textContent = tabs.find(tab => tab[0] === active)[1]; renderBackgroundSettings(); renderBlocks(); syncPreview(); }
+function render() { renderTabs(); document.querySelector('#active-page-name').textContent = tabs.find(tab => tab[0] === active)?.[1] || 'Page'; renderBackgroundSettings(); renderBlocks(); syncPreview(); }
 
 async function save(publish) {
   if (busy) return; setBusy(true); setStatus(publish ? 'Building the site and synchronizing it with GitHub…' : 'Saving the draft on this computer…');

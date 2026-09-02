@@ -1,6 +1,6 @@
 const root = document.querySelector('#preview-root');
 const channel = 'BroadcastChannel' in window ? new BroadcastChannel('peter-editor-preview') : null;
-const pages = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
+const defaultPages = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
 const allowedTypes = new Set(['hero','text','image','feature','list','quote']);
 const allowedTones = new Set(['white','sky','mint','lilac','peach']);
 const allowedSizes = new Set(['full','half','third']);
@@ -54,6 +54,7 @@ function render(next) {
   state = next;
   document.documentElement.dataset.theme = next.theme === 'dark' ? 'dark' : 'light';
   const page = next.content[next.active];
+  const pages = Array.isArray(next.content.navigation) ? next.content.navigation.filter(item => next.content[item.id]?.blocks).map(item => [item.id,item.label || 'Untitled']) : defaultPages;
   const links = pages.map(([key,label]) => `<button type="button" data-page="${key}" class="${key === next.active ? 'active' : ''}">${label}</button>`).join('');
   const backgroundImage = safeBackgroundSource(page.backgroundImage);
   root.className = `fresh-site${backgroundImage ? ' has-page-background' : ''}`;

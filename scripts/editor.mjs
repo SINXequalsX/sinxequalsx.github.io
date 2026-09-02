@@ -12,7 +12,7 @@ const git = process.env.GIT_EXE || 'git';
 const host = '127.0.0.1';
 const port = Number(process.env.PORT || 4173);
 const token = randomBytes(24).toString('hex');
-const pages = ['intro','notes','cv','projects','photos'];
+const defaultNavigation = [{id:'intro',label:'Introduction',slug:''},{id:'notes',label:'Notes',slug:'notes'},{id:'cv',label:'CV',slug:'cv'},{id:'projects',label:'Projects',slug:'projects'},{id:'photos',label:'Photos',slug:'photos'}];
 const types = ['hero','text','image','feature','list','quote'];
 const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
@@ -28,8 +28,18 @@ function cleanText(value,max=20000) { return typeof value === 'string' ? value.s
 
 function validateContent(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Content must be an object.');
-  const output = {};
-  for (const key of pages) {
+  const sourceNavigation = Array.isArray(value.navigation) ? value.navigation.slice(0,20) : defaultNavigation;
+  const navigation = []; const usedIds = new Set(), usedSlugs = new Set();
+  for (const item of sourceNavigation) {
+    const id = cleanText(item?.id,80), label = cleanText(item?.label,80), slug = cleanText(item?.slug,80);
+    const normalizedSlug = id === 'intro' ? '' : slug;
+    if (!/^[a-z0-9-]+$/.test(id) || !label || (id !== 'intro' && !/^[a-z0-9-]+$/.test(slug)) || usedIds.has(id) || usedSlugs.has(normalizedSlug)) continue;
+    navigation.push({id,label,slug:normalizedSlug}); usedIds.add(id); usedSlugs.add(normalizedSlug);
+  }
+  if (!navigation.some(item => item.id === 'intro') && value.intro?.blocks) navigation.unshift(defaultNavigation[0]);
+  if (!navigation.length) throw new Error('At least one page is required.');
+  const output = {navigation};
+  for (const {id:key} of navigation) {
     const page = value[key]; if (!page || typeof page !== 'object' || !Array.isArray(page.blocks)) throw new Error(`Page ${key} is invalid.`);
     output[key] = { title:cleanText(page.title,200), intro:cleanText(page.intro,1000), backgroundImage:cleanText(page.backgroundImage,1000), blocks:page.blocks.slice(0,100).map((block,index) => ({
       id:cleanText(block.id,100) || `${key}-${index}`, type:types.includes(block.type) ? block.type : 'text', tone:tones.includes(block.tone) ? block.tone : 'white', size:sizes.includes(block.size) ? block.size : 'full', fontStyle:fonts.includes(block.fontStyle) ? block.fontStyle : 'clean', textColor:textColors.includes(block.textColor) ? block.textColor : 'default',

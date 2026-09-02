@@ -5,13 +5,14 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 const content = JSON.parse(await readFile(path.join(root, 'content', 'published.json'), 'utf8'));
-const pages = [
+const defaultPages = [
   ['intro', '', 'Introduction'],
   ['notes', 'notes', 'Notes'],
   ['cv', 'cv', 'CV'],
   ['projects', 'projects', 'Projects'],
   ['photos', 'photos', 'Photos'],
 ];
+const pages = Array.isArray(content.navigation) ? content.navigation.filter(item => item && content[item.id]?.blocks).map(item => [item.id,item.slug || '',item.label || 'Untitled']) : defaultPages;
 const allowedTypes = new Set(['hero', 'text', 'image', 'feature', 'list', 'quote']);
 const allowedTones = new Set(['white', 'sky', 'mint', 'lilac', 'peach']);
 const allowedSizes = new Set(['full', 'half', 'third']);
@@ -101,9 +102,9 @@ function renderNav(active) {
   return `<nav class="site-nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="Peter Jiang, home">PJ<span>.</span></a><div class="nav-links">${links}<button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle dark mode"><span class="theme-symbol-moon">◐</span><span class="theme-symbol-sun">☀</span></button></div></nav>`;
 }
 
-function renderPage(key, page) {
+function renderPage(key, page, slug, label) {
   const blocks = Array.isArray(page.blocks) ? page.blocks.map(renderBlock).join('') : '';
-  const canonical = key === 'intro' ? 'https://sinxequalsx.github.io/' : `https://sinxequalsx.github.io/${key}/`;
+  const canonical = slug ? `https://sinxequalsx.github.io/${slug}/` : 'https://sinxequalsx.github.io/';
   const description = page.intro || 'Peter Jiang — mathematics, geometry, topology, and gravitation.';
   const backgroundImage = safeBackgroundSource(page.backgroundImage);
   const backgroundClass = backgroundImage ? ' has-page-background' : '';
@@ -115,7 +116,7 @@ function renderPage(key, page) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="theme-color" content="#f5fafc">
-  <meta property="og:title" content="${escapeHtml(page.title)} · Peter Jiang">
+  <meta property="og:title" content="${escapeHtml(page.title || label)} · Peter Jiang">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:image" content="https://sinxequalsx.github.io/og.png">
   <meta property="og:url" content="${canonical}">
@@ -123,7 +124,7 @@ function renderPage(key, page) {
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
   <script src="/theme.js"></script>
-  <title>${escapeHtml(page.title)} · Peter Jiang</title>
+  <title>${escapeHtml(page.title || label)} · Peter Jiang</title>
 </head>
 <body>
   <main class="fresh-site${backgroundClass}"${backgroundStyle}>${renderNav(key)}<div class="page-canvas"><section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div></main>
@@ -136,11 +137,11 @@ await mkdir(dist, { recursive: true });
 await cp(path.join(root, 'public'), dist, { recursive: true });
 await writeFile(path.join(dist, '.nojekyll'), '');
 
-for (const [key, slug] of pages) {
+for (const [key, slug, label] of pages) {
   if (!content[key]) throw new Error(`Missing page content: ${key}`);
   const outputDirectory = slug ? path.join(dist, slug) : dist;
   await mkdir(outputDirectory, { recursive: true });
-  await writeFile(path.join(outputDirectory, 'index.html'), renderPage(key, content[key]), 'utf8');
+  await writeFile(path.join(outputDirectory, 'index.html'), renderPage(key, content[key], slug, label), 'utf8');
 }
 
 console.log(`Built ${pages.length} pages in ${dist}`);
