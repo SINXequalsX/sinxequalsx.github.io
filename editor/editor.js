@@ -54,7 +54,7 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, heroImageSize:300, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
 
 function normalizeAttachments(siteContent) {
   const storedNavigation = Array.isArray(siteContent.navigation) ? siteContent.navigation : defaultTabs.map(([id,label,slug]) => ({id,label,slug}));
@@ -67,6 +67,7 @@ function normalizeAttachments(siteContent) {
       block.links = Array.isArray(block.links) ? block.links.map(link => ({id:link.id || crypto.randomUUID(),label:link.label || '',url:link.url || ''})) : [];
       block.pdfs = Array.isArray(block.pdfs) ? block.pdfs.map(pdf => ({id:pdf.id || crypto.randomUUID(),label:pdf.label || '',src:pdf.src || ''})) : [];
       block.imageHeight = Math.min(900,Math.max(220,Number(block.imageHeight) || 400));
+      block.heroImageSize = Math.min(600,Math.max(140,Number(block.heroImageSize) || 300));
       if (!block.links.length && (block.linkLabel || block.linkUrl)) block.links.push({id:crypto.randomUUID(),label:block.linkLabel || '',url:block.linkUrl || ''});
       if (!block.pdfs.length && (block.pdfLabel || block.pdfSrc)) block.pdfs.push({id:crypto.randomUUID(),label:block.pdfLabel || '',src:block.pdfSrc || ''});
       if (block.type === 'list' && Array.isArray(block.items)) block.items = block.items.map(item => { const parts = String(item).split('|||'); return parts.length > 2 ? `${parts[1]}|||${parts[0]} · ${parts.slice(2).join(' · ')}` : item; });
@@ -179,6 +180,24 @@ function renderImageResizer(block) {
   preview.append(image,handle,label); wrapper.append(preview); return wrapper;
 }
 
+function renderHeroImageResizer(block) {
+  const wrapper = document.createElement('div'); wrapper.className = 'hero-resize-editor wide';
+  const stage = document.createElement('div'); stage.className = 'hero-resize-stage';
+  const circle = document.createElement('div'); circle.className = 'hero-resize-circle';
+  const image = document.createElement('img'); image.src = block.imageSrc; image.alt = '';
+  const handle = document.createElement('div'); handle.className = 'hero-resize-handle'; handle.tabIndex = 0; handle.setAttribute('role','slider'); handle.setAttribute('aria-label','Title portrait diameter'); handle.setAttribute('aria-valuemin','140'); handle.setAttribute('aria-valuemax','600');
+  const label = document.createElement('span'); label.className = 'hero-resize-label';
+  const update = value => { block.heroImageSize = Math.min(600,Math.max(140,Math.round(value))); circle.style.width = `${Math.min(block.heroImageSize,420)}px`; label.textContent = `Drag corner · ${block.heroImageSize} px`; handle.setAttribute('aria-valuenow',String(block.heroImageSize)); syncPreview(); };
+  update(block.heroImageSize);
+  let startX = 0, startSize = block.heroImageSize;
+  handle.addEventListener('pointerdown',event => { startX = event.clientX; startSize = block.heroImageSize; handle.setPointerCapture(event.pointerId); wrapper.classList.add('resizing'); });
+  handle.addEventListener('pointermove',event => { if (handle.hasPointerCapture(event.pointerId)) update(startSize + (event.clientX - startX) * 2); });
+  const finish = event => { if (event.pointerId !== undefined && handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId); wrapper.classList.remove('resizing'); markDirty(); };
+  handle.addEventListener('pointerup',finish); handle.addEventListener('pointercancel',finish);
+  handle.addEventListener('keydown',event => { if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return; event.preventDefault(); update(event.key === 'Home' ? 140 : event.key === 'End' ? 600 : block.heroImageSize + (event.key === 'ArrowRight' ? 10 : -10)); markDirty(); });
+  circle.append(image,handle); stage.append(circle,label); wrapper.append(stage); return wrapper;
+}
+
 function renderTextOptions(block) {
   const options = document.createElement('div'); options.className = 'text-options wide';
   const link = document.createElement('section'); link.className = 'text-option-card';
@@ -239,6 +258,7 @@ function renderBlock(block, index) {
     const upload = document.createElement('label'); upload.className = 'upload-zone wide'; upload.innerHTML = `<strong>${block.type === 'hero' ? 'Choose title photo' : 'Choose an image'}</strong><span class="upload-result">${escapeHtml(block.imageSrc || 'JPG, PNG, WebP, GIF, or AVIF · maximum 15 MB')}</span>`;
     const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp,image/gif,image/avif'; input.addEventListener('change',() => input.files[0] && uploadImage(block,input.files[0])); upload.append(input); fields.append(upload);
     if (block.type === 'image' && block.imageSrc) fields.append(renderImageResizer(block));
+    if (block.type === 'hero' && block.imageSrc) fields.append(renderHeroImageResizer(block));
     if (block.imageSrc) { const removePhoto = makeButton(block.type === 'hero' ? 'Remove title photo' : 'Remove image','Remove uploaded image',() => { block.imageSrc = ''; renderBlocks(); markDirty(); }); removePhoto.className = 'clear-attachment wide'; fields.append(removePhoto); }
   }
   card.append(fields); return card;

@@ -96,8 +96,10 @@ function renderBlock(raw) {
   const pdfActions = type === 'text' ? pdfs.map(item => { const source = safePdfSource(item.src); return source ? `<a class="content-link document-link" href="${source}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.label || 'Open PDF')} <span>PDF</span></a>` : ''; }).join('') : '';
   const actions = linkActions || pdfActions ? `<div class="block-actions">${linkActions}${pdfActions}</div>` : '';
   const heroPhoto = safeImageSource(raw.imageSrc);
+  const heroImageSize = Math.min(600, Math.max(140, Number(raw.heroImageSize) || 300));
   const ornament = type === 'hero' ? heroPhoto ? `<div class="clear-orbit hero-photo"><img src="${heroPhoto}" alt="${escapeHtml(raw.imageAlt || raw.title || 'Title photo')}"></div>` : '<div class="clear-orbit" aria-hidden="true"><span>PJ</span></div>' : type === 'feature' ? '<div class="feature-orbit" aria-hidden="true"></div>' : '';
-  return `<article class="${classes}"><div class="block-content">${eyebrow}${title}${body}${list}${meta}${actions}</div>${ornament}</article>`;
+  const blockStyle = type === 'hero' ? ` style="--hero-photo-size:${heroImageSize}px"` : '';
+  return `<article class="${classes}"${blockStyle}><div class="block-content">${eyebrow}${title}${body}${list}${meta}${actions}</div>${ornament}</article>`;
 }
 
 function renderNav(active) {
