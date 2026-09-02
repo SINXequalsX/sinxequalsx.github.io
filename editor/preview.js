@@ -34,9 +34,10 @@ function renderBlock(raw) {
   const body = raw.body ? `<p class="block-copy">${formatText(raw.body)}</p>` : '';
   const meta = raw.meta ? `<span class="status-pill">${escapeHtml(raw.meta)}</span>` : '';
   if (type === 'image') {
+    const imageHeight = Math.min(900,Math.max(220,Number(raw.imageHeight) || 400));
     const source = safeImageSource(raw.imageSrc);
     const image = source ? `<img src="${source}" alt="${escapeHtml(raw.imageAlt || raw.title || '')}">` : '<div class="image-placeholder"><span>Image</span></div>';
-    return `<figure class="${classes}">${image}${eyebrow || title || body ? `<figcaption>${eyebrow}${title}${body}</figcaption>` : ''}</figure>`;
+    return `<figure class="${classes}" style="--image-height:${imageHeight}px">${image}${eyebrow || title || body ? `<figcaption>${eyebrow}${title}${body}</figcaption>` : ''}</figure>`;
   }
   const list = type === 'list' ? `<div class="block-list">${renderList(raw.items)}</div>` : '';
   const links = Array.isArray(raw.links) && raw.links.length ? raw.links : raw.linkLabel || raw.linkUrl ? [{label:raw.linkLabel,url:raw.linkUrl}] : [];

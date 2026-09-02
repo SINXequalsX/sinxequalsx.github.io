@@ -80,12 +80,13 @@ function renderBlock(raw) {
   const meta = raw.meta ? `<span class="status-pill">${escapeHtml(raw.meta)}</span>` : '';
 
   if (type === 'image') {
+    const imageHeight = Math.min(900, Math.max(220, Number(raw.imageHeight) || 400));
     const src = safeImageSource(raw.imageSrc);
     const image = src
       ? `<img src="${src}" alt="${escapeHtml(raw.imageAlt || raw.title || '')}" loading="lazy">`
       : '<div class="image-placeholder" aria-hidden="true"><span>Image</span></div>';
     const caption = eyebrow || title || body ? `<figcaption>${eyebrow}${title}${body}</figcaption>` : '';
-    return `<figure class="${classes}">${image}${caption}</figure>`;
+    return `<figure class="${classes}" style="--image-height:${imageHeight}px">${image}${caption}</figure>`;
   }
 
   const list = type === 'list' ? `<div class="block-list">${renderList(raw.items)}</div>` : '';

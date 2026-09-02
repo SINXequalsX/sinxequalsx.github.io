@@ -54,7 +54,7 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
 
 function normalizeAttachments(siteContent) {
   const storedNavigation = Array.isArray(siteContent.navigation) ? siteContent.navigation : defaultTabs.map(([id,label,slug]) => ({id,label,slug}));
@@ -66,6 +66,7 @@ function normalizeAttachments(siteContent) {
     for (const block of page.blocks) {
       block.links = Array.isArray(block.links) ? block.links.map(link => ({id:link.id || crypto.randomUUID(),label:link.label || '',url:link.url || ''})) : [];
       block.pdfs = Array.isArray(block.pdfs) ? block.pdfs.map(pdf => ({id:pdf.id || crypto.randomUUID(),label:pdf.label || '',src:pdf.src || ''})) : [];
+      block.imageHeight = Math.min(900,Math.max(220,Number(block.imageHeight) || 400));
       if (!block.links.length && (block.linkLabel || block.linkUrl)) block.links.push({id:crypto.randomUUID(),label:block.linkLabel || '',url:block.linkUrl || ''});
       if (!block.pdfs.length && (block.pdfLabel || block.pdfSrc)) block.pdfs.push({id:crypto.randomUUID(),label:block.pdfLabel || '',src:block.pdfSrc || ''});
       if (block.type === 'list' && Array.isArray(block.items)) block.items = block.items.map(item => { const parts = String(item).split('|||'); return parts.length > 2 ? `${parts[1]}|||${parts[0]} · ${parts.slice(2).join(' · ')}` : item; });
@@ -161,6 +162,23 @@ function makeButton(label, title, action, disabled = false) {
   const button = document.createElement('button'); button.type = 'button'; button.textContent = label; button.title = title; button.disabled = disabled; button.addEventListener('click',action); return button;
 }
 
+function renderImageResizer(block) {
+  const wrapper = document.createElement('div'); wrapper.className = 'image-resize-editor wide';
+  const preview = document.createElement('div'); preview.className = 'image-resize-preview'; preview.style.height = `${block.imageHeight}px`;
+  const image = document.createElement('img'); image.src = block.imageSrc; image.alt = '';
+  const handle = document.createElement('div'); handle.className = 'image-resize-handle'; handle.tabIndex = 0; handle.setAttribute('role','slider'); handle.setAttribute('aria-label','Image height'); handle.setAttribute('aria-valuemin','220'); handle.setAttribute('aria-valuemax','900');
+  const label = document.createElement('span');
+  const update = value => { block.imageHeight = Math.min(900,Math.max(220,Math.round(value))); preview.style.height = `${block.imageHeight}px`; label.textContent = `Drag to resize · ${block.imageHeight} px`; handle.setAttribute('aria-valuenow',String(block.imageHeight)); syncPreview(); };
+  update(block.imageHeight);
+  let startY = 0, startHeight = block.imageHeight;
+  handle.addEventListener('pointerdown',event => { startY = event.clientY; startHeight = block.imageHeight; handle.setPointerCapture(event.pointerId); wrapper.classList.add('resizing'); });
+  handle.addEventListener('pointermove',event => { if (handle.hasPointerCapture(event.pointerId)) update(startHeight + event.clientY - startY); });
+  const finish = event => { if (event.pointerId !== undefined && handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId); wrapper.classList.remove('resizing'); markDirty(); };
+  handle.addEventListener('pointerup',finish); handle.addEventListener('pointercancel',finish);
+  handle.addEventListener('keydown',event => { if (!['ArrowUp','ArrowDown','Home','End'].includes(event.key)) return; event.preventDefault(); update(event.key === 'Home' ? 220 : event.key === 'End' ? 900 : block.imageHeight + (event.key === 'ArrowDown' ? 10 : -10)); markDirty(); });
+  preview.append(image,handle,label); wrapper.append(preview); return wrapper;
+}
+
 function renderTextOptions(block) {
   const options = document.createElement('div'); options.className = 'text-options wide';
   const link = document.createElement('section'); link.className = 'text-option-card';
@@ -220,6 +238,7 @@ function renderBlock(block, index) {
     fields.append(field(block.type === 'hero' ? 'Title photo description (alt text)' : 'Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
     const upload = document.createElement('label'); upload.className = 'upload-zone wide'; upload.innerHTML = `<strong>${block.type === 'hero' ? 'Choose title photo' : 'Choose an image'}</strong><span class="upload-result">${escapeHtml(block.imageSrc || 'JPG, PNG, WebP, GIF, or AVIF · maximum 15 MB')}</span>`;
     const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp,image/gif,image/avif'; input.addEventListener('change',() => input.files[0] && uploadImage(block,input.files[0])); upload.append(input); fields.append(upload);
+    if (block.type === 'image' && block.imageSrc) fields.append(renderImageResizer(block));
     if (block.imageSrc) { const removePhoto = makeButton(block.type === 'hero' ? 'Remove title photo' : 'Remove image','Remove uploaded image',() => { block.imageSrc = ''; renderBlocks(); markDirty(); }); removePhoto.className = 'clear-attachment wide'; fields.append(removePhoto); }
   }
   card.append(fields); return card;
