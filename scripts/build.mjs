@@ -1,10 +1,15 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 const content = JSON.parse(await readFile(path.join(root, 'content', 'published.json'), 'utf8'));
+const siteCssVersion = createHash('sha256')
+  .update(await readFile(path.join(root, 'public', 'site.css')))
+  .digest('hex')
+  .slice(0, 12);
 const defaultPages = [
   ['intro', '', 'Introduction'],
   ['notes', 'notes', 'Notes'],
@@ -122,7 +127,7 @@ function renderPage(key, page, slug, label) {
   <meta property="og:url" content="${canonical}">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" href="/favicon.svg">
-  <link rel="stylesheet" href="/site.css">
+  <link rel="stylesheet" href="/site.css?v=${siteCssVersion}">
   <script src="/theme.js"></script>
   <title>${escapeHtml(page.title || label)} · Peter Jiang</title>
 </head>
