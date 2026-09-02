@@ -81,6 +81,27 @@
     "backgroundImage": "",
     "blocks": [
       {
+        "id": "0f9f07f7-f06b-4f1c-886c-b012b6326759",
+        "type": "hero",
+        "tone": "sky",
+        "size": "full",
+        "fontStyle": "clean",
+        "textColor": "default",
+        "eyebrow": "",
+        "title": "A clear new beginning",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
+        "items": []
+      },
+      {
         "id": "notes-kirby",
         "type": "feature",
         "tone": "sky",
@@ -149,18 +170,18 @@
         "links": [],
         "pdfs": [],
         "items": [
-          "Mathematical Tripos, Part III|||2026–2027 · University of Cambridge ",
-          "Mathematical Tripos, Parts IA–II, University of Cambridge |||2023–2026 ·   Part II rank: 20/250 (top 8%) "
+          "Mathematical Tripos, Part III ||| 2026 ~ Current · University of Cambridge ",
+          "Mathematical Tripos, Parts IA–II ||| 2023 ~ 2026,  University of Cambridge, Part II rank: 20/250 (top 8%)"
         ]
       },
       {
         "id": "cv-research",
         "type": "list",
-        "tone": "mint",
+        "tone": "lilac",
         "size": "half",
         "fontStyle": "clean",
-        "textColor": "default",
-        "eyebrow": "Experience",
+        "textColor": "black",
+        "eyebrow": "",
         "title": "Research",
         "body": "",
         "meta": "",
@@ -175,55 +196,6 @@
         "items": [
           "General relativity and black holes||| · Supervised by Professor Mihalis Dafermos",
           "Low-dimensional topology|||Handle decompositions, Morse functions, and surface topology"
-        ]
-      },
-      {
-        "id": "cv-interests",
-        "type": "list",
-        "tone": "lilac",
-        "size": "full",
-        "fontStyle": "clean",
-        "textColor": "default",
-        "eyebrow": "Research interests",
-        "title": "Questions and fields",
-        "body": "",
-        "meta": "",
-        "imageSrc": "",
-        "imageAlt": "",
-        "linkLabel": "",
-        "linkUrl": "",
-        "pdfLabel": "",
-        "pdfSrc": "",
-        "links": [],
-        "pdfs": [],
-        "items": [
-          "Mathematical general relativity",
-          "Geometric analysis",
-          "Low-dimensional topology",
-          "Differential geometry"
-        ]
-      },
-      {
-        "id": "5f61a07e-3033-4175-a9ea-f8ba8e13ec6c",
-        "type": "list",
-        "tone": "sky",
-        "size": "half",
-        "fontStyle": "clean",
-        "textColor": "default",
-        "eyebrow": "",
-        "title": "",
-        "body": "",
-        "meta": "",
-        "imageSrc": "",
-        "imageAlt": "",
-        "linkLabel": "",
-        "linkUrl": "",
-        "pdfLabel": "",
-        "pdfSrc": "",
-        "links": [],
-        "pdfs": [],
-        "items": [
-          "First item"
         ]
       }
     ]
@@ -244,8 +216,8 @@
         "title": "Projects",
         "body": "Maths visualisation projects, computational projects and etc ",
         "meta": "",
-        "imageSrc": "",
-        "imageAlt": "",
+        "imageSrc": "/uploads/1788355687226-image-8f699e.png",
+        "imageAlt": "中秋",
         "linkLabel": "",
         "linkUrl": "",
         "pdfLabel": "",
