@@ -104,7 +104,7 @@ function renderNav(active) {
     const href = slug ? `/${slug}/` : '/';
     return `<a${key === active ? ' class="active" aria-current="page"' : ''} href="${href}">${label}</a>`;
   }).join('');
-  return `<nav class="site-nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="Peter Jiang, home">PJ<span>.</span></a><div class="nav-links">${links}<button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle dark mode"><span class="theme-symbol-moon">◐</span><span class="theme-symbol-sun">☀</span></button></div></nav>`;
+  return `<nav class="site-nav" aria-label="Primary navigation"><a class="wordmark" href="/" aria-label="Peter Jiang, home"><span class="wordmark-logo"><img src="/uploads/1788353017407-Zheng-401a7a.jpg" alt=""></span></a><div class="nav-links">${links}<button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle dark mode"><span class="theme-symbol-moon">◐</span><span class="theme-symbol-sun">☀</span></button></div></nav>`;
 }
 
 function renderPage(key, page, slug, label) {

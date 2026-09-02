@@ -59,7 +59,7 @@ function render(next) {
   const backgroundImage = safeBackgroundSource(page.backgroundImage);
   root.className = `fresh-site${backgroundImage ? ' has-page-background' : ''}`;
   backgroundImage ? root.style.setProperty('--page-background-image',`url('${backgroundImage}')`) : root.style.removeProperty('--page-background-image');
-  root.innerHTML = `<nav class="site-nav"><button type="button" class="wordmark" data-page="intro">PJ<span>.</span></button><div class="nav-links">${links}</div></nav><div class="page-canvas"><section class="public-block-grid">${page.blocks.map(renderBlock).join('')}</section></div>`;
+  root.innerHTML = `<nav class="site-nav"><button type="button" class="wordmark" data-page="intro" aria-label="Peter Jiang, home"><span class="wordmark-logo"><img src="/uploads/1788353017407-Zheng-401a7a.jpg" alt=""></span></button><div class="nav-links">${links}</div></nav><div class="page-canvas"><section class="public-block-grid">${page.blocks.map(renderBlock).join('')}</section></div>`;
   root.querySelectorAll('[data-page]').forEach(button => button.addEventListener('click', () => {
     const active = button.dataset.page;
     channel?.postMessage({type:'navigate',active});
