@@ -92,7 +92,7 @@ function renderPage(key, page) {
   <title>${escapeHtml(page.title)} · Peter Jiang</title>
 </head>
 <body>
-  <main class="fresh-site">${renderNav(key)}<div class="page-canvas">${pageHeader}<section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div><footer class="site-footer"><span>© ${new Date().getFullYear()} Peter Jiang</span><span>Mathematics · Geometry · Gravitation</span></footer></main>
+  <main class="fresh-site">${renderNav(key)}<div class="page-canvas">${pageHeader}<section class="public-block-grid" aria-label="${escapeHtml(page.title)} content">${blocks}</section></div></main>
 </body>
 </html>`;
 }

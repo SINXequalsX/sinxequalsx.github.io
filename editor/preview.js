@@ -41,7 +41,7 @@ function render(next) {
   const links = pages.map(([key,label]) => `<button type="button" data-page="${key}" class="${key === next.active ? 'active' : ''}">${label}</button>`).join('');
   const header = next.active === 'intro' ? '' : `<header class="page-title-block tone-white"><p class="block-kicker">${next.active === 'cv' ? 'Academic profile' : next.active === 'photos' ? 'Visual notebook' : 'Peter Jiang'}</p><h1>${escapeHtml(page.title)}</h1><p>${escapeHtml(page.intro)}</p></header>`;
   root.className = 'fresh-site';
-  root.innerHTML = `<nav class="site-nav"><button type="button" class="wordmark" data-page="intro">PJ<span>.</span></button><div class="nav-links">${links}</div></nav><div class="page-canvas">${header}<section class="public-block-grid">${page.blocks.map(renderBlock).join('')}</section></div><footer class="site-footer"><span>Draft preview</span><span>Not public until published</span></footer>`;
+  root.innerHTML = `<nav class="site-nav"><button type="button" class="wordmark" data-page="intro">PJ<span>.</span></button><div class="nav-links">${links}</div></nav><div class="page-canvas">${header}<section class="public-block-grid">${page.blocks.map(renderBlock).join('')}</section></div>`;
   root.querySelectorAll('[data-page]').forEach(button => button.addEventListener('click', () => {
     const active = button.dataset.page;
     channel?.postMessage({type:'navigate',active});
