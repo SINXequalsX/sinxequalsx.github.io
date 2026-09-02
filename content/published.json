@@ -1,6 +1,6 @@
 {
   "intro": {
-    "title": "Zheng (Peter) Jiang ",
+    "title": "Zheng Jiang",
     "intro": "Geometry, Topology, Gravitation, Analysis",
     "blocks": [
       {
@@ -9,7 +9,7 @@
         "tone": "sky",
         "size": "full",
         "eyebrow": "Mathematics · University of Cambridge",
-        "title": "",
+        "title": "Zheng is BS",
         "body": "I am a Cambridge mathematician preparing for Part III",
         "meta": "",
         "imageSrc": "",
@@ -90,7 +90,7 @@
     ]
   },
   "cv": {
-    "title": "Curriculum vitae",
+    "title": "",
     "intro": "My academic background and current research trajectory in geometry, topology, and mathematical general relativity.",
     "blocks": [
       {
