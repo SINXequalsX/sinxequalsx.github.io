@@ -29,6 +29,17 @@ function safeImageSource(value = '') {
   return '';
 }
 
+function safeLinkSource(value = '') {
+  const source = String(value).trim();
+  if (/^https?:\/\//i.test(source) || /^mailto:/i.test(source) || /^\/(?!\/)[a-zA-Z0-9/_-]*$/.test(source)) return escapeHtml(source);
+  return '';
+}
+
+function safePdfSource(value = '') {
+  const source = String(value).trim();
+  return /^\/uploads\/[a-zA-Z0-9._-]+\.pdf$/i.test(source) ? source : '';
+}
+
 function renderList(items = []) {
   return items.map((item, index) => {
     const [leading, title, detail] = String(item).split('|||');
@@ -57,8 +68,11 @@ function renderBlock(raw) {
   }
 
   const list = type === 'list' ? `<div class="block-list">${renderList(raw.items)}</div>` : '';
+  const linkSource = type === 'text' ? safeLinkSource(raw.linkUrl) : '';
+  const pdfSource = type === 'text' ? safePdfSource(raw.pdfSrc) : '';
+  const actions = linkSource || pdfSource ? `<div class="block-actions">${linkSource ? `<a class="content-link" href="${linkSource}" target="_blank" rel="noopener noreferrer">${escapeHtml(raw.linkLabel || 'Open link')} <span>↗</span></a>` : ''}${pdfSource ? `<a class="content-link document-link" href="${pdfSource}" target="_blank" rel="noopener noreferrer">${escapeHtml(raw.pdfLabel || 'Open PDF')} <span>PDF</span></a>` : ''}</div>` : '';
   const ornament = type === 'hero' ? '<div class="clear-orbit" aria-hidden="true"><span>PJ</span></div>' : type === 'feature' ? '<div class="feature-orbit" aria-hidden="true"></div>' : '';
-  return `<article class="${classes}"><div class="block-content">${eyebrow}${title}${body}${list}${meta}</div>${ornament}</article>`;
+  return `<article class="${classes}"><div class="block-content">${eyebrow}${title}${body}${list}${meta}${actions}</div>${ornament}</article>`;
 }
 
 function renderNav(active) {

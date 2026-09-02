@@ -4,9 +4,9 @@ if (token) sessionStorage.setItem('peter-editor-token', token);
 const tabs = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
 const blockChoices = [
   ['hero','Title'],['text','Text'],['image','Photo'],
-  ['feature','Highlight'],['quote','Quote'],
+  ['quote','Quote'],
 ];
-const blockLabels = {...Object.fromEntries(blockChoices),list:'List'};
+const blockLabels = {...Object.fromEntries(blockChoices),feature:'Highlight',list:'List'};
 const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
 let content, active = 'intro', openPicker = null, busy = false;
@@ -27,7 +27,7 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', linkLabel:'', linkUrl:'', pdfLabel:'', pdfSrc:'', items:type === 'list' ? ['First item'] : [] }; }
 
 function previewState() { return {content,active,theme:document.documentElement.dataset.theme || 'light'}; }
 function syncPreview() {
@@ -91,6 +91,32 @@ function makeButton(label, title, action, disabled = false) {
   const button = document.createElement('button'); button.type = 'button'; button.textContent = label; button.title = title; button.disabled = disabled; button.addEventListener('click',action); return button;
 }
 
+function renderTextOptions(block) {
+  const options = document.createElement('div'); options.className = 'text-options wide';
+  const link = document.createElement('section'); link.className = 'text-option-card';
+  link.innerHTML = '<div class="text-option-heading"><strong>Link</strong><span>Web page</span></div>';
+  link.append(
+    field('Button text',block.linkLabel,{onInput:value => block.linkLabel = value}),
+    field('Address',block.linkUrl,{onInput:value => block.linkUrl = value}),
+  );
+  if (block.linkLabel || block.linkUrl) {
+    const clear = makeButton('Remove link','Remove link',() => { block.linkLabel = ''; block.linkUrl = ''; renderBlocks(); markDirty(); }); clear.className = 'clear-attachment'; link.append(clear);
+  }
+
+  const pdf = document.createElement('section'); pdf.className = 'text-option-card';
+  pdf.innerHTML = '<div class="text-option-heading"><strong>PDF</strong><span>Document</span></div>';
+  pdf.append(field('Button text',block.pdfLabel,{onInput:value => block.pdfLabel = value}));
+  const upload = document.createElement('label'); upload.className = 'compact-upload';
+  const uploadText = document.createElement('span'); uploadText.textContent = block.pdfSrc ? 'Replace PDF' : 'Attach PDF';
+  const file = document.createElement('input'); file.type = 'file'; file.accept = 'application/pdf,.pdf'; file.addEventListener('change',() => file.files[0] && uploadPdf(block,file.files[0]));
+  upload.append(uploadText,file); pdf.append(upload);
+  if (block.pdfSrc) {
+    const attached = document.createElement('small'); attached.className = 'attached-file'; attached.textContent = block.pdfSrc.split('/').pop(); pdf.append(attached);
+    const clear = makeButton('Remove PDF','Remove PDF',() => { block.pdfLabel = ''; block.pdfSrc = ''; renderBlocks(); markDirty(); }); clear.className = 'clear-attachment'; pdf.append(clear);
+  }
+  options.append(link,pdf); return options;
+}
+
 function renderBlock(block, index) {
   const card = document.createElement('article'); card.className = `modular-editor-card tone-${block.tone}`;
   const toolbar = document.createElement('div'); toolbar.className = 'block-editor-toolbar'; toolbar.innerHTML = `<div><span class="block-type-label">${escapeHtml(blockLabels[block.type] || block.type)}</span><span>Box ${index + 1}</span></div>`;
@@ -111,6 +137,7 @@ function renderBlock(block, index) {
     field('Body',block.body,{wide:true,multiline:true,rows:4,onInput:value => block.body = value}),
   );
   if (['hero','feature'].includes(block.type)) fields.append(field('Small label / metadata',block.meta,{wide:true,onInput:value => block.meta = value}));
+  if (block.type === 'text') fields.append(renderTextOptions(block));
   if (block.type === 'list') fields.append(field('Items — one per line; use Date|||Title|||Detail for timeline rows',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
   if (block.type === 'image') {
     fields.append(field('Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
@@ -140,6 +167,15 @@ async function uploadImage(block,file) {
     const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'Upload failed.');
     block.imageSrc = result.path; if (!block.imageAlt) block.imageAlt = file.name.replace(/\.[^.]+$/,''); renderBlocks(); markDirty();
   } catch (error) { setStatus(error.message || 'Upload failed.','error'); } finally { setBusy(false); }
+}
+
+async function uploadPdf(block,file) {
+  if (busy) return; setBusy(true); setStatus('Copying PDF into the project…');
+  try {
+    const response = await fetch('/api/upload-pdf',{method:'POST',headers:authHeaders({'content-type':'application/pdf','x-file-name':encodeURIComponent(file.name)}),body:file});
+    const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'PDF upload failed.');
+    block.pdfSrc = result.path; if (!block.pdfLabel) block.pdfLabel = file.name.replace(/\.pdf$/i,''); renderBlocks(); markDirty();
+  } catch (error) { setStatus(error.message || 'PDF upload failed.','error'); } finally { setBusy(false); }
 }
 
 document.querySelector('#save-draft').addEventListener('click',() => save(false)); document.querySelector('#publish').addEventListener('click',() => save(true));
