@@ -4,9 +4,9 @@ if (token) sessionStorage.setItem('peter-editor-token', token);
 const tabs = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
 const blockChoices = [
   ['hero','Title'],['text','Text'],['image','Photo'],
-  ['feature','Highlight'],['list','List'],['quote','Quote'],
+  ['feature','Highlight'],['quote','Quote'],
 ];
-const blockLabels = Object.fromEntries(blockChoices);
+const blockLabels = {...Object.fromEntries(blockChoices),list:'List'};
 const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
 let content, active = 'intro', openPicker = null, busy = false;
