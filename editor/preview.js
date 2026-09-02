@@ -9,6 +9,7 @@ const allowedTextColors = new Set(['default','black','white','gray','blue','red'
 let state = null;
 
 function escapeHtml(value = '') { return String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[character]); }
+function formatText(value = '') { return escapeHtml(value).replace(/\\{3}/g,'<br>'); }
 function safeImageSource(value = '') { const source = String(value).trim(); return /^\/uploads\/[a-zA-Z0-9._-]+$/.test(source) || /^https:\/\//i.test(source) ? escapeHtml(source) : ''; }
 function safeBackgroundSource(value = '') { const source = String(value).trim(); return /^\/uploads\/[a-zA-Z0-9._-]+$/.test(source) ? source : ''; }
 function safeLinkSource(value = '') { const source = String(value).trim(); return /^https?:\/\//i.test(source) || /^mailto:/i.test(source) || /^\/(?!\/)[a-zA-Z0-9/_-]*$/.test(source) ? escapeHtml(source) : ''; }
@@ -18,7 +19,7 @@ function renderList(items = []) {
     const parts = String(item).split('|||');
     const [title,...descriptionParts] = parts.length > 2 ? [parts[1],parts[0],...parts.slice(2)] : parts;
     const description = descriptionParts.join(' · ');
-    return description ? `<div class="structured-list-item"><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description)}</p></div>` : `<span class="list-pill">${escapeHtml(title)}</span>`;
+    return description ? `<div class="structured-list-item"><strong>${formatText(title)}</strong><p>${formatText(description)}</p></div>` : `<span class="list-pill">${formatText(title)}</span>`;
   }).join('');
 }
 function renderBlock(raw) {
@@ -29,8 +30,8 @@ function renderBlock(raw) {
   const textColor = allowedTextColors.has(raw.textColor) ? raw.textColor : 'default';
   const classes = `content-block block-${type} size-${size} tone-${tone} font-${font} text-${textColor}`;
   const eyebrow = raw.eyebrow ? `<p class="block-kicker">${escapeHtml(raw.eyebrow)}</p>` : '';
-  const title = raw.title ? (type === 'quote' ? `<blockquote>${escapeHtml(raw.title)}</blockquote>` : `<h2>${escapeHtml(raw.title)}</h2>`) : '';
-  const body = raw.body ? `<p class="block-copy">${escapeHtml(raw.body)}</p>` : '';
+  const title = raw.title ? (type === 'quote' ? `<blockquote>${formatText(raw.title)}</blockquote>` : `<h2>${formatText(raw.title)}</h2>`) : '';
+  const body = raw.body ? `<p class="block-copy">${formatText(raw.body)}</p>` : '';
   const meta = raw.meta ? `<span class="status-pill">${escapeHtml(raw.meta)}</span>` : '';
   if (type === 'image') {
     const source = safeImageSource(raw.imageSrc);

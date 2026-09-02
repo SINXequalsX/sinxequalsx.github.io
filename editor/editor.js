@@ -184,11 +184,11 @@ function renderBlock(block, index) {
   fields.append(
     field('Eyebrow',block.eyebrow,{onInput:value => block.eyebrow = value}),
     field(block.type === 'quote' ? 'Statement' : 'Title',block.title,{onInput:value => block.title = value}),
-    field('Body',block.body,{wide:true,multiline:true,rows:4,onInput:value => block.body = value}),
+    field('Body — three backslashes make a line break',block.body,{wide:true,multiline:true,rows:4,onInput:value => block.body = value}),
   );
   if (['hero','feature'].includes(block.type)) fields.append(field('Small label / metadata',block.meta,{wide:true,onInput:value => block.meta = value}));
   if (block.type === 'text') fields.append(renderTextOptions(block));
-  if (block.type === 'list') fields.append(field('Items — one per line; use Title|||Description',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
+  if (block.type === 'list') fields.append(field('Items — one per line; use Title|||Description; three backslashes break a line inside an item',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
   if (block.type === 'image') {
     fields.append(field('Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
     const upload = document.createElement('label'); upload.className = 'upload-zone wide'; upload.innerHTML = `<strong>Choose an image</strong><span class="upload-result">${escapeHtml(block.imageSrc || 'JPG, PNG, WebP, GIF, or AVIF · maximum 15 MB')}</span>`;
