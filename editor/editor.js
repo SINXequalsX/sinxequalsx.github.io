@@ -17,6 +17,30 @@ const previewChannel = 'BroadcastChannel' in window ? new BroadcastChannel('pete
 const pageTabs = document.querySelector('#page-tabs');
 const pageSettings = document.querySelector('#page-settings');
 const blockList = document.querySelector('#block-list');
+const editorStage = document.querySelector('.editor-stage');
+const previewResizer = document.querySelector('#preview-resizer');
+
+function setEditorSplit(percent, remember = true) {
+  const bounded = Math.min(68,Math.max(32,Number(percent) || 42));
+  editorStage.style.setProperty('--editor-pane',`${bounded}%`);
+  previewResizer.setAttribute('aria-valuenow',String(Math.round(bounded)));
+  if (remember) localStorage.setItem('peter-editor-split',String(bounded));
+}
+setEditorSplit(localStorage.getItem('peter-editor-split') || 42,false);
+previewResizer.addEventListener('pointerdown',event => {
+  previewResizer.setPointerCapture(event.pointerId); document.body.classList.add('is-resizing');
+});
+previewResizer.addEventListener('pointermove',event => {
+  if (!previewResizer.hasPointerCapture(event.pointerId)) return;
+  const bounds = editorStage.getBoundingClientRect(); setEditorSplit(((event.clientX - bounds.left) / bounds.width) * 100);
+});
+previewResizer.addEventListener('pointerup',event => { previewResizer.releasePointerCapture(event.pointerId); document.body.classList.remove('is-resizing'); });
+previewResizer.addEventListener('pointercancel',() => document.body.classList.remove('is-resizing'));
+previewResizer.addEventListener('keydown',event => {
+  if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+  event.preventDefault(); const current = Number(previewResizer.getAttribute('aria-valuenow')) || 42;
+  setEditorSplit(event.key === 'Home' ? 32 : event.key === 'End' ? 68 : current + (event.key === 'ArrowRight' ? 2 : -2));
+});
 
 function escapeHtml(value = '') { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[c]); }
 function setStatus(message, kind = 'idle') {
