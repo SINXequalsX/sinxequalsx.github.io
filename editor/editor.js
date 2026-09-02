@@ -62,6 +62,7 @@ function normalizeAttachments(siteContent) {
       block.pdfs = Array.isArray(block.pdfs) ? block.pdfs.map(pdf => ({id:pdf.id || crypto.randomUUID(),label:pdf.label || '',src:pdf.src || ''})) : [];
       if (!block.links.length && (block.linkLabel || block.linkUrl)) block.links.push({id:crypto.randomUUID(),label:block.linkLabel || '',url:block.linkUrl || ''});
       if (!block.pdfs.length && (block.pdfLabel || block.pdfSrc)) block.pdfs.push({id:crypto.randomUUID(),label:block.pdfLabel || '',src:block.pdfSrc || ''});
+      if (block.type === 'list' && Array.isArray(block.items)) block.items = block.items.map(item => { const parts = String(item).split('|||'); return parts.length > 2 ? `${parts[1]}|||${parts[0]} · ${parts.slice(2).join(' · ')}` : item; });
       block.linkLabel = ''; block.linkUrl = ''; block.pdfLabel = ''; block.pdfSrc = '';
     }
   }
@@ -187,7 +188,7 @@ function renderBlock(block, index) {
   );
   if (['hero','feature'].includes(block.type)) fields.append(field('Small label / metadata',block.meta,{wide:true,onInput:value => block.meta = value}));
   if (block.type === 'text') fields.append(renderTextOptions(block));
-  if (block.type === 'list') fields.append(field('Items — one per line; use Date|||Title|||Detail for timeline rows',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
+  if (block.type === 'list') fields.append(field('Items — one per line; use Title|||Description',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
   if (block.type === 'image') {
     fields.append(field('Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
     const upload = document.createElement('label'); upload.className = 'upload-zone wide'; upload.innerHTML = `<strong>Choose an image</strong><span class="upload-result">${escapeHtml(block.imageSrc || 'JPG, PNG, WebP, GIF, or AVIF · maximum 15 MB')}</span>`;

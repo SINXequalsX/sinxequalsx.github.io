@@ -48,10 +48,12 @@ function safePdfSource(value = '') {
 }
 
 function renderList(items = []) {
-  return items.map((item, index) => {
-    const [leading, title, detail] = String(item).split('|||');
-    if (!title) return `<span class="list-pill">${escapeHtml(leading)}</span>`;
-    return `<div class="structured-list-item"><span>${escapeHtml(leading)}</span><div><strong>${escapeHtml(title)}</strong>${detail ? `<p>${escapeHtml(detail)}</p>` : ''}</div></div>`;
+  return items.map((item) => {
+    const parts = String(item).split('|||');
+    const [title, ...descriptionParts] = parts.length > 2 ? [parts[1], parts[0], ...parts.slice(2)] : parts;
+    const description = descriptionParts.join(' · ');
+    if (!description) return `<span class="list-pill">${escapeHtml(title)}</span>`;
+    return `<div class="structured-list-item"><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description)}</p></div>`;
   }).join('');
 }
 

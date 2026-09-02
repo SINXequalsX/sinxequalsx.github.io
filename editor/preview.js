@@ -15,8 +15,10 @@ function safeLinkSource(value = '') { const source = String(value).trim(); retur
 function safePdfSource(value = '') { const source = String(value).trim(); return /^\/uploads\/[a-zA-Z0-9._-]+\.pdf$/i.test(source) ? source : ''; }
 function renderList(items = []) {
   return items.map(item => {
-    const [leading,title,detail] = String(item).split('|||');
-    return title ? `<div class="structured-list-item"><span>${escapeHtml(leading)}</span><div><strong>${escapeHtml(title)}</strong>${detail ? `<p>${escapeHtml(detail)}</p>` : ''}</div></div>` : `<span class="list-pill">${escapeHtml(leading)}</span>`;
+    const parts = String(item).split('|||');
+    const [title,...descriptionParts] = parts.length > 2 ? [parts[1],parts[0],...parts.slice(2)] : parts;
+    const description = descriptionParts.join(' · ');
+    return description ? `<div class="structured-list-item"><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description)}</p></div>` : `<span class="list-pill">${escapeHtml(title)}</span>`;
   }).join('');
 }
 function renderBlock(raw) {
