@@ -113,17 +113,39 @@ function pageSlug(label) {
   const used = new Set(tabs.map(tab => tab[2])); let candidate = base, number = 2;
   while (used.has(candidate)) candidate = `${base}-${number++}`; return candidate;
 }
+
+function openPageDialog({title,initialValue = '',actionLabel,onSubmit}) {
+  document.querySelector('.page-dialog-backdrop')?.remove();
+  const backdrop = document.createElement('div'); backdrop.className = 'page-dialog-backdrop';
+  const form = document.createElement('form'); form.className = 'page-dialog';
+  const heading = document.createElement('h2'); heading.textContent = title;
+  const inputLabel = document.createElement('label'); inputLabel.textContent = 'Page name';
+  const input = document.createElement('input'); input.type = 'text'; input.maxLength = 80; input.required = true; input.value = initialValue; input.autocomplete = 'off';
+  const actions = document.createElement('div'); actions.className = 'page-dialog-actions';
+  const cancel = makeButton('Cancel','Close without saving',() => backdrop.remove()); cancel.className = 'page-dialog-cancel';
+  const submit = document.createElement('button'); submit.type = 'submit'; submit.className = 'page-dialog-submit'; submit.textContent = actionLabel;
+  const close = () => backdrop.remove();
+  form.addEventListener('submit',event => { event.preventDefault(); const label = input.value.trim(); if (!label) { input.focus(); return; } onSubmit(label); close(); });
+  backdrop.addEventListener('pointerdown',event => { if (event.target === backdrop) close(); });
+  backdrop.addEventListener('keydown',event => { if (event.key === 'Escape') close(); });
+  inputLabel.append(input); actions.append(cancel,submit); form.append(heading,inputLabel,actions); backdrop.append(form); document.body.append(backdrop); input.focus(); input.select();
+}
+
 function createPage() {
-  const label = prompt('Name this page:','New page')?.trim(); if (!label) return;
-  const id = `page-${crypto.randomUUID().slice(0,8)}`, slug = pageSlug(label), titleBlock = newBlock('hero'); titleBlock.title = label;
-  content[id] = {title:label,intro:'',backgroundImage:'',blocks:[titleBlock]}; tabs.push([id,label,slug]); content.navigation = tabs.map(([pageId,pageLabel,pagePath]) => ({id:pageId,label:pageLabel,slug:pagePath}));
-  active = id; openPicker = null; render(); markDirty();
+  openPageDialog({title:'Add a new page',initialValue:'New page',actionLabel:'Add page',onSubmit:label => {
+    const id = `page-${crypto.randomUUID().slice(0,8)}`, slug = pageSlug(label), titleBlock = newBlock('hero'); titleBlock.title = label;
+    content[id] = {title:label,intro:'',backgroundImage:'',blocks:[titleBlock]}; tabs.push([id,label,slug]); content.navigation = tabs.map(([pageId,pageLabel,pagePath]) => ({id:pageId,label:pageLabel,slug:pagePath}));
+    active = id; openPicker = null; render(); markDirty();
+  }});
 }
 function renameActivePage() {
   const tab = tabs.find(item => item[0] === active); if (!tab) return;
-  const oldLabel = tab[1], label = prompt('Rename this page:',oldLabel)?.trim(); if (!label || label === oldLabel) return;
-  tab[1] = label; if (!content[active].title || content[active].title === oldLabel) content[active].title = label;
-  content.navigation = tabs.map(([id,pageLabel,slug]) => ({id,label:pageLabel,slug})); render(); markDirty();
+  const oldLabel = tab[1];
+  openPageDialog({title:'Rename this page',initialValue:oldLabel,actionLabel:'Rename page',onSubmit:label => {
+    if (label === oldLabel) return;
+    tab[1] = label; if (!content[active].title || content[active].title === oldLabel) content[active].title = label;
+    content.navigation = tabs.map(([id,pageLabel,slug]) => ({id,label:pageLabel,slug})); render(); markDirty();
+  }});
 }
 
 function renderBackgroundSettings() {
