@@ -3,10 +3,10 @@ if (token) sessionStorage.setItem('peter-editor-token', token);
 
 const tabs = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
 const blockChoices = [
-  ['hero','Hero','A large opening statement'],['text','Text','Heading and paragraph'],
-  ['image','Image','Photo with a caption'],['feature','Feature','A highlighted idea or project'],
-  ['list','List','Entries, interests, or milestones'],['quote','Quote','A spacious statement'],
+  ['hero','Title'],['text','Text'],['image','Photo'],
+  ['feature','Highlight'],['list','List'],['quote','Quote'],
 ];
+const blockLabels = Object.fromEntries(blockChoices);
 const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
 let content, active = 'intro', openPicker = null, busy = false;
@@ -78,8 +78,8 @@ function renderPicker(index) {
     const picker = document.querySelector('#picker-template').content.firstElementChild.cloneNode(true);
     picker.querySelector('[data-close-picker]').addEventListener('click', () => { openPicker = null; renderBlocks(); });
     const grid = picker.querySelector('.block-choice-grid');
-    for (const [type,label,description] of blockChoices) {
-      const button = document.createElement('button'); button.type = 'button'; button.innerHTML = `<span>${label}</span><small>${description}</small>`;
+    for (const [type,label] of blockChoices) {
+      const button = document.createElement('button'); button.type = 'button'; button.innerHTML = `<span>${label}</span>`;
       button.addEventListener('click', () => { content[active].blocks.splice(index,0,newBlock(type)); openPicker = null; renderBlocks(); markDirty(); }); grid.append(button);
     }
     holder.append(picker);
@@ -93,7 +93,7 @@ function makeButton(label, title, action, disabled = false) {
 
 function renderBlock(block, index) {
   const card = document.createElement('article'); card.className = `modular-editor-card tone-${block.tone}`;
-  const toolbar = document.createElement('div'); toolbar.className = 'block-editor-toolbar'; toolbar.innerHTML = `<div><span class="block-type-label">${escapeHtml(block.type)}</span><span>Block ${index + 1}</span></div>`;
+  const toolbar = document.createElement('div'); toolbar.className = 'block-editor-toolbar'; toolbar.innerHTML = `<div><span class="block-type-label">${escapeHtml(blockLabels[block.type] || block.type)}</span><span>Box ${index + 1}</span></div>`;
   const controls = document.createElement('div'); controls.className = 'block-layout-controls';
   const toneLabel = document.createElement('label'); toneLabel.innerHTML = '<span>Color</span>'; const toneSelect = document.createElement('select');
   tones.forEach(tone => toneSelect.add(new Option(tone[0].toUpperCase()+tone.slice(1),tone,false,block.tone === tone))); toneSelect.addEventListener('change',() => { block.tone = toneSelect.value; renderBlocks(); markDirty(); }); toneLabel.append(toneSelect);
