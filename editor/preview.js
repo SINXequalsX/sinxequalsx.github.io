@@ -4,6 +4,8 @@ const pages = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects
 const allowedTypes = new Set(['hero','text','image','feature','list','quote']);
 const allowedTones = new Set(['white','sky','mint','lilac','peach']);
 const allowedSizes = new Set(['full','half','third']);
+const allowedFonts = new Set(['clean','bold','rounded','serif']);
+const allowedTextColors = new Set(['default','black','white','gray','blue','red']);
 let state = null;
 
 function escapeHtml(value = '') { return String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[character]); }
@@ -21,7 +23,9 @@ function renderBlock(raw) {
   const type = allowedTypes.has(raw.type) ? raw.type : 'text';
   const tone = allowedTones.has(raw.tone) ? raw.tone : 'white';
   const size = allowedSizes.has(raw.size) ? raw.size : 'full';
-  const classes = `content-block block-${type} size-${size} tone-${tone}`;
+  const font = allowedFonts.has(raw.fontStyle) ? raw.fontStyle : 'clean';
+  const textColor = allowedTextColors.has(raw.textColor) ? raw.textColor : 'default';
+  const classes = `content-block block-${type} size-${size} tone-${tone} font-${font} text-${textColor}`;
   const eyebrow = raw.eyebrow ? `<p class="block-kicker">${escapeHtml(raw.eyebrow)}</p>` : '';
   const title = raw.title ? (type === 'quote' ? `<blockquote>${escapeHtml(raw.title)}</blockquote>` : `<h2>${escapeHtml(raw.title)}</h2>`) : '';
   const body = raw.body ? `<p class="block-copy">${escapeHtml(raw.body)}</p>` : '';

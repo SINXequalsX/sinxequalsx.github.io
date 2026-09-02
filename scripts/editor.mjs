@@ -16,6 +16,8 @@ const pages = ['intro','notes','cv','projects','photos'];
 const types = ['hero','text','image','feature','list','quote'];
 const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
+const fonts = ['clean','bold','rounded','serif'];
+const textColors = ['default','black','white','gray','blue','red'];
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.avif':'image/avif'};
 
 function build() { execFileSync(node,[path.join(root,'scripts','build.mjs')],{cwd:root,stdio:'pipe',timeout:30000}); }
@@ -30,7 +32,7 @@ function validateContent(value) {
   for (const key of pages) {
     const page = value[key]; if (!page || typeof page !== 'object' || !Array.isArray(page.blocks)) throw new Error(`Page ${key} is invalid.`);
     output[key] = { title:cleanText(page.title,200), intro:cleanText(page.intro,1000), backgroundImage:cleanText(page.backgroundImage,1000), blocks:page.blocks.slice(0,100).map((block,index) => ({
-      id:cleanText(block.id,100) || `${key}-${index}`, type:types.includes(block.type) ? block.type : 'text', tone:tones.includes(block.tone) ? block.tone : 'white', size:sizes.includes(block.size) ? block.size : 'full',
+      id:cleanText(block.id,100) || `${key}-${index}`, type:types.includes(block.type) ? block.type : 'text', tone:tones.includes(block.tone) ? block.tone : 'white', size:sizes.includes(block.size) ? block.size : 'full', fontStyle:fonts.includes(block.fontStyle) ? block.fontStyle : 'clean', textColor:textColors.includes(block.textColor) ? block.textColor : 'default',
       eyebrow:cleanText(block.eyebrow,300), title:cleanText(block.title,500), body:cleanText(block.body), meta:cleanText(block.meta,500), imageSrc:cleanText(block.imageSrc,1000), imageAlt:cleanText(block.imageAlt,500),
       linkLabel:cleanText(block.linkLabel,200), linkUrl:cleanText(block.linkUrl,2000), pdfLabel:cleanText(block.pdfLabel,200), pdfSrc:cleanText(block.pdfSrc,1000),
       links:Array.isArray(block.links) ? block.links.slice(0,30).map((item,itemIndex) => ({id:cleanText(item.id,100) || `link-${itemIndex}`,label:cleanText(item.label,200),url:cleanText(item.url,2000)})) : [],

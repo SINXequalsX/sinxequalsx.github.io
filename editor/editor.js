@@ -9,6 +9,8 @@ const blockChoices = [
 const blockLabels = {...Object.fromEntries(blockChoices),feature:'Highlight',list:'List'};
 const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
+const fonts = [['clean','Clean'],['bold','Bold'],['rounded','Rounded'],['serif','Serif']];
+const textColors = [['default','Default'],['black','Black'],['white','White'],['gray','Gray'],['blue','Blue'],['red','Red']];
 let content, active = 'intro', openPicker = null, busy = false;
 const statusElement = document.querySelector('#status');
 const feedbackElement = document.querySelector('#save-feedback');
@@ -51,7 +53,7 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
 
 function normalizeAttachments(siteContent) {
   for (const page of Object.values(siteContent)) {
@@ -168,7 +170,11 @@ function renderBlock(block, index) {
   tones.forEach(tone => toneSelect.add(new Option(tone[0].toUpperCase()+tone.slice(1),tone,false,block.tone === tone))); toneSelect.addEventListener('change',() => { block.tone = toneSelect.value; renderBlocks(); markDirty(); }); toneLabel.append(toneSelect);
   const sizeLabel = document.createElement('label'); sizeLabel.innerHTML = '<span>Width</span>'; const sizeSelect = document.createElement('select');
   sizes.forEach(size => sizeSelect.add(new Option(size[0].toUpperCase()+size.slice(1),size,false,block.size === size))); sizeSelect.addEventListener('change',() => { block.size = sizeSelect.value; markDirty(); }); sizeLabel.append(sizeSelect);
-  controls.append(toneLabel,sizeLabel,
+  const fontLabel = document.createElement('label'); fontLabel.innerHTML = '<span>Font</span>'; const fontSelect = document.createElement('select');
+  fonts.forEach(([value,label]) => fontSelect.add(new Option(label,value,false,(block.fontStyle || 'clean') === value))); fontSelect.addEventListener('change',() => { block.fontStyle = fontSelect.value; markDirty(); }); fontLabel.append(fontSelect);
+  const colorLabel = document.createElement('label'); colorLabel.innerHTML = '<span>Text</span>'; const colorSelect = document.createElement('select');
+  textColors.forEach(([value,label]) => colorSelect.add(new Option(label,value,false,(block.textColor || 'default') === value))); colorSelect.addEventListener('change',() => { block.textColor = colorSelect.value; markDirty(); }); colorLabel.append(colorSelect);
+  controls.append(toneLabel,sizeLabel,fontLabel,colorLabel,
     makeButton('↑','Move up',() => move(index,-1),index === 0), makeButton('↓','Move down',() => move(index,1),index === content[active].blocks.length-1),
     makeButton('Duplicate','Duplicate block',() => { content[active].blocks.splice(index+1,0,{...block,id:crypto.randomUUID(),items:[...block.items],links:block.links.map(item => ({...item,id:crypto.randomUUID()})),pdfs:block.pdfs.map(item => ({...item,id:crypto.randomUUID()}))}); renderBlocks(); markDirty(); }),
   );
