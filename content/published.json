@@ -69,7 +69,7 @@
         "meta": "",
         "imageSrc": "/uploads/1788353593768-Zheng-a5bd6e.jpg",
         "imageAlt": "Zheng",
-        "imageHeight": 400,
+        "imageHeight": 220,
         "heroImageSize": 300,
         "linkLabel": "",
         "linkUrl": "",
@@ -155,7 +155,18 @@
         "pdfLabel": "",
         "pdfSrc": "",
         "links": [],
-        "pdfs": [],
+        "pdfs": [
+          {
+            "id": "48e29c35-d353-4723-8451-44c9bcc26b3c",
+            "label": "The uniqueness of differential structures on R and R^2, Zheng",
+            "src": "/uploads/1789839209312-The-uniqueness-of-differential-structures-on-R-and-R-2-Zheng-28984f.pdf"
+          },
+          {
+            "id": "c52edf03-2ad9-46a1-bc53-3264342605ea",
+            "label": "presentation PPT",
+            "src": "/uploads/1789839227722-summer_presentation-768762.pdf"
+          }
+        ],
         "items": []
       },
       {
@@ -179,7 +190,13 @@
         "pdfLabel": "",
         "pdfSrc": "",
         "links": [],
-        "pdfs": [],
+        "pdfs": [
+          {
+            "id": "9ddcdfc7-f26f-4ecf-af20-8bf6c361c12b",
+            "label": "Penrose singularity theorem proof zheng",
+            "src": "/uploads/1789839278057-Penrose-singularity-theorem-proof-zheng-133c7e.pdf"
+          }
+        ],
         "items": []
       },
       {
@@ -192,7 +209,7 @@
         "titleSize": 0,
         "eyebrow": "Lecture notes",
         "title": "PKU summer school on differential geometry",
-        "body": "Complex geometry  \\\\\\\n\nRiemannian geometry \\\\\\\n\nSecond order elliptic PDEs",
+        "body": "",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
@@ -203,7 +220,23 @@
         "pdfLabel": "",
         "pdfSrc": "",
         "links": [],
-        "pdfs": [],
+        "pdfs": [
+          {
+            "id": "17ca871e-5ade-49e6-a23f-fd9adfa3dde9",
+            "label": "Complex Geometry",
+            "src": "/uploads/1789839300447-Complex-Geometry-256bcc.pdf"
+          },
+          {
+            "id": "235cd480-ac9d-44c4-bdd9-38111987cfdd",
+            "label": "Riemannian Geometry",
+            "src": "/uploads/1789839303961-Riemannian-Geometry-583db0.pdf"
+          },
+          {
+            "id": "7092044f-6939-4bc1-a817-217243f75691",
+            "label": "Second Order Elliptic PDE",
+            "src": "/uploads/1789839307399-Second-Order-Elliptic-PDE-d7506f.pdf"
+          }
+        ],
         "items": []
       },
       {
@@ -216,7 +249,7 @@
         "titleSize": 0,
         "eyebrow": "Lecture Notes",
         "title": "Cambridge Notes",
-        "body": "1. rieman surfaces \\\\\\ \n2. prob and measure  \\\\\\\n3. linear analysis \\\\\\\n4. analysis of functions  \\\\\\\n5. differential geometry \\\\\\\n6. algebraic topology \\\\\\\n",
+        "body": "I prefer seeing the connections between different concepts instead of linear reading \n",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
@@ -226,7 +259,43 @@
         "linkUrl": "",
         "pdfLabel": "",
         "pdfSrc": "",
-        "links": [],
+        "links": [
+          {
+            "id": "31745ff5-7b35-4a8b-837f-0e85dc48191e",
+            "label": "Algebraic Topology",
+            "url": "https://q.uiver.app/#q=WzAsNzUsWzEyLDMsIlgiXSxbMTYsMywiWSJdLFsxMCwxLCJLJyJdLFsxOCwxLCJMJyJdLFsxMCw1LCJLIl0sWzE4LDUsIkwiXSxbNywzLCJcXHBoaSBcXGNpcmMgXFxwc2kgXFxjb25nIFxcdGV4dHtpZH0gXFxjb25nIFxccHNpIFxcY2lyYyBcXHBoaSBcXFxcIFxccGhpX3sqfSBcXGNpcmMgXFxwc2lfKiA9IFxcdGV4dHtpZH1fKiA9XFxwc2lfKiBcXGNpcmMgXFxwaGlfKiBcXFxcIFxccGhpXyogXFx0ZXh0eyBpcyBhbiBpc28sIGFuZCB9IFxccGhpXyo9XFxwc2lfKl57LTF9Il0sWzEzLDksIkhfKlxcbGVmdChLXFxyaWdodCkgXFxcXCB8S3wiXSxbMTcsOSwiSF8qXFxsZWZ0KExcXHJpZ2h0KSBcXFxcIHxMfCJdLFsxMSw3LCJIXypcXGxlZnQoS157KHIpfVxccmlnaHQpIFxcXFwgS157KHIpfSJdLFsxMSwxMSwiSF8qXFxsZWZ0KEteeyhzKX1cXHJpZ2h0KSBcXFxcIEteeyhzKX0iXSxbMTMsMTMsIlxcYWxwaGEgXFxjaXJjIGdfMSwgZ18yIFxcdGV4dHsgYXJlIGJvdGggc2ltcGxpY2lhbCBhcHByb3ggdG8gfSBmIFxcY2lyYyBcXHRleHR7aWR9PWYgXFxcXCAiXSxbMTMsMTQsIlxcYWxwaGEgXFxjaXJjIGdfMSwgZ18yIFxcdGV4dHsgYXJlIGNvbnRpZ3VvdXN9Il0sWzE0LDE1LCIoXFxhbHBoYSBcXGNpcmMgZ18xKV8qPShnXzIpXyogIFxcXFwgKGdfMicpXyo9KGdfMilfKiBcXFxcIFxcdGV4dHsgbG9uZyBzaGl0IHByb29mLCBzaGlmdCBpbmRpY2VzIH0iXSxbMjIsOCwiSyJdLFsyNiw4LCJMIl0sWzMwLDgsIlMiXSxbMjIsMTIsIkteeyhzKX0iXSxbMjYsMTAsIkxeeyhyKX0iXSxbMjEsMTMsIlxcYnVsbGV0Il0sWzIxLDE0LCJcXGJ1bGxldCJdLFsyMywxMywiXFxidWxsZXQiXSxbMjQsMTMsIlxcdGV4dHt0b30iXSxbMjUsMTMsIlxcYnVsbGV0Il0sWzI1LDE1LCJcXGJ1bGxldCJdLFsyNiwxNCwiXFxidWxsZXQiXSxbMjYsMTMsIlxcYnVsbGV0Il0sWzI3LDEzLCJcXGJ1bGxldCJdLFsyOCwxMywiXFx0ZXh0e3RvfSJdLFsyOSwxMywiXFxidWxsZXQiXSxbMjksMTUsIlxcYnVsbGV0Il0sWzMwLDEzLCJcXGJ1bGxldCJdLFszMCwxNCwiXFxidWxsZXQiXSxbMzEsMTMsIlxcYnVsbGV0Il0sWzMyLDEzLCJcXHRleHR7IHNpbXBsaWNpYWwgYXBwcm94IHN0YWJsZSB1bmRlciBjb21wb3NpdGlvbn0iXSxbMTQsMTMsImdfMiwgZ18yJyBcXHRleHR7IGFyZSBib3RoIHNpbXBsaWNpYWwgYXBwcm94IHRvIH0gZiAiXSxbMTQsMTQsIlxcdGV4dHt0aGV5IGFyZSBjb250aWd1b3VzfSJdLFsxMSwxNSwiXFx0ZXh0e3NpbXBsaWNpYWwgYXBwcm94IHRobSB9IFxcXFwgXFx0ZXh0e3B1bGwgYmFjayB0aGUgc3RhciBhbmQgdXNlIGxlYmVzZ3VlIGNvdn0gXFxcXCBcXHRleHR7U3R9X3tLXnsocil9fSh2KSBcXHN1YnNldCBCX3tcXG11KEteeyhyKX0pfSh2KSBcXHN1YnNldCBcXHRleHR7U3R9X3tMfSh3KSBcXFxcIFxcdGV4dHtpZiB9Zih2KSBcXGluIFZfTCwgXFx0ZXh0eyB1c2UgY29udGludWl0eX0iXSxbMTEsMTcsIlxcb"
+          },
+          {
+            "id": "adc2c35e-893e-4a27-b462-24d178fbb527",
+            "label": "Analysis of Functions",
+            "url": "https://q.uiver.app/#q=WzAsNDYsWzE2LDUsIlxcbWF0aGNhbHtGfSBcXHRleHR7IG9uIH0gTF5wKFxcbWF0aGJie1J9Xm4pIFxcXFwgXFx0ZXh0e0FvRn0iXSxbMTYsOSwiXFxtYXRoY2Fse0Z9IFxcdGV4dHsgb24gfSBMXnAoXFxtYXRoYmJ7VH1ebikgXFxcXCBcXHRleHR7QW9GfSJdLFsxLDksIlxcbWF0aGNhbHtGfSBcXHRleHR7IG9uIH0gQyhcXG1hdGhiYntUfV5uKSBcXFxcIFxcdGV4dHtMQX0iXSxbMTYsMTYsIlxcbWF0aGNhbHtGfSBcXHRleHR7IG9uIH0gUycoXFxtYXRoYmJ7Un1ebikgXFxcXCBcXHRleHR7QW9GfSJdLFsxNiwyMCwiXFxtYXRoY2Fse0Z9IFxcdGV4dHsgb24gfSBEJyhcXG1hdGhiYntUfV5uKSBcXFxcIFxcdGV4dHtBb0Z9Il0sWzcsMTIsIiBLX24gXFxzdGFyIGcgXFx0byBnIFxcXFwgS19uPXVnX24sIFxcIHU9MV97Wy1cXGZyYWN7MX17Mn0sXFxmcmFjezF9ezJ9KV5ufSwgXFwgZ19uKHgpPVxcc3VtX3tcXHhpIFxcaW4gXFxaXm59ZV57MlxccGkgaVxcbGFuZ2xlIHggLCBcXHhpXFxyYW5nbGV9YV9uKFxceGkpXFxcXCBLX24gXFxzdGFyIHVnIFxcdG8gdWcsXFwgIEtfbiBcXHN0YXIgXFxzdW1fe2EgXFxpbiBcXFpebn0gXFx0YXVfYSh1ZykgXFx0byBcXHN1bV97YSBcXGluIFxcWl5ufSBcXHRhdV9hKHVnKT1nIFxcdGV4dHsgYnkgcGVyaW9kaWNpdHkgYW5kIGNwdCBzdXBwIG9mIH11XFxcXCBcXHRleHR7VGhpbms6IEdhdXNzaWFuIHNoYXBlfVxcXFwgXFx0ZXh0e0V4OiBGZWplciBrZXJuZWwgaW4gTEF9Il0sWzcsMTEsIlxcdGV4dHthcHByb3ggb2YgaWR9IFxcXFwgXFx0ZXh0ezMgcHJvcHMgfVxcXFwoMSkgXFxpbnRcXHBoaV9uPTEsIFxcICgyKVxcaW50X3tCX1xcZXBzaWxvbn0gXFxwaGlfbiBcXHRvIDAsIFxcICgzKSBcXHBoaV9uIFxcZ2VxIDAgIl0sWzcsMTAsInx8Zl9uIFxcc3RhciBnIC1nfHxfe3B9IFxcdG8gMCBcXHRleHR7IGZvciB9IGcgXFxpbiBMXnAoXFxSXm4pIl0sWzcsMTYsIkRfbih4KT11KHgpXFxzdW1fe1xceGkgXFxpbiBcXFpebn1lXnsyXFxwaSBpIFxcbGFuZ2xlIHgsIFxceGlcXHJhbmdsZX0xX3tcXHt8XFx4aXw8blxcfX0gXFxcXCBcXHRleHR7VGhpbms6IHNxdWFyZSBzaGFwZX1cXFxcIFxcdGV4dHtEaXJpY2hsZXQga2VybmVsIGluIExBfSJdLFs0LDE2LCJEX24gXFxzdGFyIGcgXFx0byBnIFxcXFwgXFx0ZXh0e3B0d2lzZX0iXSxbMTAsMTYsIkRfbiBcXHN0YXIgZyBcXHRvIGcgXFxcXCBcXHRleHR7YS5lfSJdLFs0LDE5LCJUX24oZyk9KERfbiBcXHN0YXIgZykoMCksIFxcIFRfbjogQyhcXG1hdGhiYntUfV5uKSBcXHRvIFxcbWF0aGJie0Z9IFxcXFwgVF9uIFxcaW4gQyhcXG1hdGhiYntUfV5uKScsIFxcIHx8VF9ufHwgXFx0b1xcaW5mdHksIFxcXFwgfHxUX258fD1cXGludHxEX258ICBcXHRleHR7IHBhcnRpdGlvbiBvZiB0aGUgaW50ZXJ2YWwgYnkgcGVyaW9kc30iXSxbNCwyMCwiXFx0ZXh0e2hlbmNlIH0gXFxleGlzdHMgZyBcXHRleHR7IHMudCB9IHxUX24oZyl8I"
+          },
+          {
+            "id": "b56af9dc-56b4-4efe-a350-2761e402f6f2",
+            "label": "Differential Geometry",
+            "url": "https://q.uiver.app/#q=WzAsMTA0LFsxNCwzLCJcXHRleHR7ZGVmIDI6IEUgZ2xvYmFsIGV4dHJlbWlzZXJ9IFxcXFwgXFx0ZXh0e2kuZSBvbmx5IH0gTyhzXjIpIFxcdGV4dHsgY2hhbmdlIH0iXSxbOSwwLCJcXHRleHR7TXVzdCBoYXZlIGNvbnN0YW50IHNwZWVkfSAiXSxbNiwzLCJcXHRleHR7ZGVmIDE6IH1cXGdhbW1hJycodCkgXFx0ZXh0eyBub3JtYWwgdG8gfSBUX3AgUyAiXSxbNyw3LCJcXHRleHR7R2VvZGVzaWMgcG9sYXIgY29vcmR9IFxcXFwgXFx0ZXh0e2V4cH1fcCA6IFRfcCBTIFxcdG8gUywgXFwgdiBcXG1hcHN0byBcXGdhbW1hX3YoMSkgXFxcXCBcXHRleHR7ZXhpc3RlbmNlIGZvciB9IHJcXGhhdHt2fSBcXHRleHR7IGJ5ICB0aGUgZ2VvIGVxdStwaWNhcmQgbGluZGVsb2Z9IFxcXFwgXFx0ZXh0e2xvY2FsIGV4aXN0ZW5jZSBieSBjb21wYWN0bmVzcyBvZiB9IFNeMSwgXFx0ZXh0eyBzbyB9IHIgXFx0ZXh0eyBoYXMgYSBtaW5pbWFsIHZhbHVlfSAiXSxbMTEsNywiXFx0ZXh0e0dlbyBub3JtYWwgY29vcmR9IFxcXFwgXFx0ZXh0e1NoZWV0IDQ6IH0gR1xcZXF1aXYxICBcXGlmZiBcXHRleHR7cGFyYWxsZWwgbGluZXMgYXJlIGFsbCBnZW99Il0sWzksNywiXFx0ZXh0e2xvY2FsIGdlbyBjb29yZCBzdWNoIHRoYXQgfSBcXFxcIEVcXGVxdWl2Me+8jCBGXFxlcXVpdjDvvIwgRz4wIl0sWzExLDksIlxcdGV4dHtnZW9kZXNpYyBlcXUsIEUtTCBmb3JtfSBcXFxcIFxcYmVnaW57YWxpZ25lZH0gXFxmcmFje2R9e2R0fVxcZnJhY3tcXHBhcnRpYWwgTH17XFxwYXJ0aWFsIFxcZG90IHV9ICY9XFxmcmFje1xccGFydGlhbCBMfXtcXHBhcnRpYWwgdX0sXFwgXFxmcmFje2R9e2R0fVxcZnJhY3tcXHBhcnRpYWwgTH17XFxwYXJ0aWFsIFxcZG90IHZ9ID1cXGZyYWN7XFxwYXJ0aWFsIEx9e1xccGFydGlhbCB2fSwgXFwgTD1cXGZyYWMxMihFXFxkb3QgdV4yKzJGXFxkb3QgdVxcZG90IHYrR1xcZG90IHZeMiksXFxcXCBcXGZyYWN7ZH17ZHR9KEVcXGRvdCB1K0ZcXGRvdCB2KSAmPVxcZnJhYzEyKEVfdVxcZG90IHVeMisyRl91XFxkb3QgdVxcZG90IHYrR191XFxkb3Qgdl4yKSxcXFxcIFxcZnJhY3tkfXtkdH0oRlxcZG90IHUrR1xcZG90IHYpICY9XFxmcmFjMTIoRV92XFxkb3QgdV4yKzJGX3ZcXGRvdCB1XFxkb3QgditHX3ZcXGRvdCB2XjIpLiBcXGVuZHthbGlnbmVkfSJdLFs5LDE0LCJcXHRleHR7VGhlb3JlbWEgRXJlZ2l1bSB9IFxcXFwgSyBcXHRleHR7IGludmFyaWFudCB1bmRlciBpc29tZXRyeX0iXSxbNiwxNCwiXFx0ZXh0e0ksIElJIGZ1bmRhbWVudGFsIGZvcm19IFxcXFwgXFxwaGk6IFUgXFx0byBTIFxcXFwgKEUsRixGLEcpLCBcXCAoZSxmICwgZiwgZykiXSxbNywxMSwiXFx0ZXh0e3BhcmFsbGVsIHRyYW5zcG9ydCBlcXU6IH1cXGZyYWN7RFd9e2R0fT0wIFxcXFwgVyh0KT1hKHQpXFxwaGlfdStiKHQpXFxwaGlfdiJdLFs3LDksIlxcdGV4dHtnZW9kZXNpYyBlcXUsIGFjY2VsZXJhdGlvbiBmb3JtOiB9XFxcXCAoXFxnY"
+          },
+          {
+            "id": "78e50163-d8aa-4a07-ac97-d62e8f8721f1",
+            "label": "Linear Analysis",
+            "url": "https://q.uiver.app/#q=WzAsODMsWzE4LDIsIlxcdGV4dHtCYWlyZSBDYXR9IFxcXFwgXFxlbXB0eXNldD1cXGJpZ2NhcF97bj0xfV5cXGluZnR5IE9fbiwgXFwgXFxvdmVybGluZXtPX259PVgiXSxbMTUsNCwiXFx0ZXh0e29wZW4gbWFwcGluZyBsZW1tYX0iXSxbMTUsNiwiXFx0ZXh0e29wZW4gbWFwcGluZyB0aGVvcmVtfSBcXFxcIFQ6IFggXFx0d29oZWFkcmlnaHRhcnJvdyBZIFxcaW1wbGllcyBUIFxcdGV4dHsgb3Blbn0iXSxbMTYsNCwiVChCX1gpIFxcdGV4dHsgaXMgfVxcZGVsdGEtXFx0ZXh0e2RlbnNlIGluIH0gQl9ZIFxcXFwgQl9ZIFxcc3Vic2V0IFQoXFxmcmFjezF9ezEtXFxkZWx0YX1CX1gpICJdLFsxNCw0LCJYXFx0ZXh0eyBCYW5hY2h9Il0sWzE0LDYsIlgsIFkgXFx0ZXh0eyBCYW5hY2h9Il0sWzE2LDYsIlxcdHdvaGVhZHJpZ2h0YXJyb3cgOiBZPVxcYmlnY3VwX24gXFxvdmVybGluZXtUKEJfbigwKSl9IFxcXFwgWSBcXHRleHR7IEJhbmFjaH06IEJfXFx2YXJlcHNpbG9uKDApIFxcc3Vic2V0IFxcb3ZlcmxpbmV7VChCX24oMCkpfSBcXGltcGxpZXMgQl9cXHZhcmVwc2lsb24oMClcXHN1YnNldCBUKEJfbigwKSkrXFxmcmFjezF9ezJ9Ql8xKDApIFxcXFwgWCBcXHRleHR7IEJhbmFjaCA6IH1UKEJfbigwKSkgXFx0ZXh0eyBpcyAgMS8yIGRlbnNlIGluIH1CX1xcdmFyZXBzaWxvbigwKSBcXGltcGxpZXMgQl9cXHZhcmVwc2lsb24oMCkgXFxzdWJzZXQgVChCX24oMCkpIl0sWzE1LDgsIlxcdGV4dHtJbnZlcnNlIG1hcHBpbmcgdGhlb3JlbX0gXFxcXCBUIFxcaW4gQihYLFkpIFxcdGV4dHsgYmlqIH0gXFxpbXBsaWVzIFQgXFx0ZXh0eyBpcyBhbiBpc299Il0sWzE1LDEwLCJcXHRleHR7Y2xvc2VkIGdyYXBoIHRoZW9yZW19Il0sWzE2LDgsIlQgXFx0ZXh0eyBpcyBvcGVuIH1cXGltcGxpZXMgVF57LTF9IFxcdGV4dHsgaXMgY3RzfSJdLFsxNiwxMCwiXFxHYW1tYT0oeCxUeCkgXFxtYXBzdG8geCBcXHRleHR7IGlzIGJpamVjdGl2ZSBhbmQgY3RzfSwgXFxHYW1tYSBcXHRleHR7IEJhbmFjaH0gXFxcXCBcXGltcGxpZXMgeCBcXG1hcHN0byAoeCwgVHgpIFxcdGV4dHsgY3RzfSBcXGltcGxpZXMgeCBcXG1hcHN0byAoeCwgVHgpIFxcbWFwc3RvIHggXFx0ZXh0eyBjdHN9Il0sWzE4LDQsIlxcdGV4dHtQcmluY2lwbGUgb2YgdW5pZm9ybSBib3VuZGVkbmVzc30gXFxcXCBYIFxcdGV4dHsgQmFuYWNofSwgWSBcXHRleHR7IE5vcm1lZH0gXFxcXCAoVF9uKV9uIDogWCBcXHRvIFksIFxcZm9yYWxsIHhcXGluIFgsIFxcc3VwIHxUX24oeCl8PFxcaW5mdHkgXFxpbXBsaWVzIFxcc3VwIHx8VF9ufCA8XFxpbmZ0eSJdLFsyMSwyLCJcXHRleHR7RXhpc3RlbmNlIG9mIG5vbndoZXJlIGRpZmYgZm59Il0sWzIxLDQsIkE9XFx7ZiBcXHRleHQgeyBkaWZmIGF0IH14IFxcaW4gWzAsMV1cXH0gXFxzdWJzZXQgQyhbMCwxXSkgIl0sWzIxLDUsIkFfbj1cXHtmIFxcIHwgXFwgXFxleGlzdHMgeCwgXFwgXFxmb3JhbGwgeVxcaW5bMCwxXSBcX"
+          },
+          {
+            "id": "a5b90266-57a1-49e9-861b-bc24946230ce",
+            "label": "Riemann Surfaces",
+            "url": "https://q.uiver.app/#q=WzAsNDUsWzMsMCwiKGYsRCkgXFxzaW0gKGcsIEUpICBcXHRleHR7IGJ5IH0gRFxcY2FwIEU9VlxcbmVxXFxlbXB0eSwgZ3xfVj1mfF9WIFxcXFwgKGYsRCkgXFxhcHByb3ggKGcsIEUpIFxcdGV4dHsgYnkgfSAoZixEKSBcXHNpbSBcXGNkb3RzIFxcc2ltIChnLEUpIl0sWzMsMSwiXFx0ZXh0e3N0YXJ0IGZyb20gfSAoZixEKSJdLFszLDIsIlxcdGV4dCB7aGFzIH1cXG1hdGhjYWx7Rn09XFx7KGcsRSkgXFwgfCBcXCAoZyxFKSBcXGFwcHJveCAoZixEKVxcfSBcXFxcIFM9XFxiaWdzcWN1cCBEXFx0aW1lc1xce2ZcXH0gXFxcXCAoeixmKSBcXHNpbSh3LGcgKSBcXHRleHR7IGJ5IH0gej13IFxcaW4gIERcXGNhcCBFLCBnPWYgXFx0ZXh0eyBuZWFyIH16ICJdLFszLDMsIlJfe1xcbWF0aGNhbHtGfX0iXSxbOCwxLCJEIFxcdGltZXMgXFx7ZlxcfSJdLFs4LDUsIkQiXSxbMTAsMywiW2YsRF0iXSxbNSwzLCIgIFMvXFxzaW0gXFxcXCBcXHRleHR7SGF1c2RvcmZmOiB0d28gY2FzZXN9IFxcXFwgXFx0ZXh0e0Nvbm5lY3RlZDogcGF0aC1jb25uZWN0ZWQsIHdvcmsgaW4gfVMiXSxbOCwwLCJTIl0sWzYsMywiW2YsRF0gXFxcXCBcXHRleHR7IG9wZW4gaW4gfVMiXSxbNCw0LCJSX3tcXG1hdGhjYWx7Rn19IFxcdGV4dHsgaXMgY29ubmVjdGVkIGFuZCBIYXVzfSBcXFxcIFxccGkgXFx0ZXh0eyBpcyBhIGNvdmVyaW5nIH1cXFxcIFxcZXhpc3RzIFxcdGV4dHsgdW5pcXVlIHN0cnVjdHVyZSBvbiB9Ul97XFxtYXRoY2Fse0Z9fSBcXHRleHR7IHMudCB9IFxccGkgXFx0ZXh0eyBpcyBhbmFseXRpY30gXFxcXCBcXGV4aXN0cyBGOiBSX3tcXG1hdGhjYWx7Rn0gfSBcXHRvIFxcbWF0aGJie0N9IFxcdGV4dHsgYW5hbHl0aWMgYW5kIH0gRnxfe1tmLERdfT1mIFxcY2lyYyBcXHBpfF97W2YsRF19Il0sWzQsNSwiRnxfe1tmLERdfSgoeixmKV97XFxzaW19KT1mKHopIFxcXFwgXFx0ZXh0e3dlbGwtZGVmaW5lZCwgc2luY2UgfSh6LGYpIFxcc2ltICh3LGcpIFxcaW1wbGllcyB6PXcsIGYoeik9Zyh3KSBcXFxcIFxcdGV4dHtBbmFseXRpYyBzaW5jZSB9IGYsIFxccGkgXFx0ZXh0eyBhcmV9Il0sWzEsMywiUl97XFxtYXRoY2Fse0ZfMH19Il0sWzEsMiwiXFxtYXRoY2Fse0Z9XzAgXFxzdWJzZXQgXFxtYXRoY2Fse0Z9IFxcXFwgKGYsRCkgXFxpbiBcXG1hdGhjYWx7Rn0sIEQ9XFxiaWdjdXBfaSBEX2kgXFx0ZXh0eyBzLnQgfURfaSBcXHN1YnNldCBFX2ksIChnX2ksIEVfaSkgXFxpbiBcXG1hdGhjYWx7Rn1fMCwgZ19pfF97RF9pfT1mfF97RF9pfSJdLFszLDcsIlxcd2lkZWhhdHtSX3tcXG1hdGhjYWx7Rn19fSJdLFswLDksIlJfe1xcbWF0aGNhbHtGfX0iXSxbMCwxMSwiWF4qIFxcc3Vic2V0IFxcbWF0aGJie0N9IFxcdGltZXMgXFxtYXRoYmJ7Q30iXSxbMSw5LCJcXG92ZXJsaW5le1Jfe1xcbWF0aGNhbHtGfX19IFxcXFwgXFx0ZXh0e2FkZGluZyB6ZXJvc30iXSxbMSwxMSwiWCBcXFxcIFxcdGV4dHthZGRpbmcgemVyb3N9Il0sWzIsO"
+          },
+          {
+            "id": "4963a893-2993-40b5-a132-fb65dba32137",
+            "label": "Topics in Analysis",
+            "url": "https://q.uiver.app/#q=WzAsMzQsWzMsMTYsIlxcdGV4dHtBcHByb3hpbWF0aW9ufSJdLFs2LDYsIlxcdGV4dHtDaGVieWNoZXZ9Il0sWzYsMTMsIlxcdGV4dHtMZWdlbmRyZX0iXSxbNiwyOCwiXFx0ZXh0e2NvbnRpbnVvdXMgZnJhY3Rpb24gfSBcXFxcIFxcdGV4dHtjb252ZXJnZW50fSJdLFs2LDIwLCJcXHRleHR7UnVuZ2UncyB0aGVvcmVtfSJdLFswLDEzLCJcXHRleHR7QnJvdXdlcidzIGZpeCBwb2ludCB0aGVvcmVtfSJdLFswLDE2LCJcXHRleHR7d2luZGluZyBudW1iZXJ9Il0sWzgsMjAsIksgXFxzdWJzZXQgXFxtYXRoYmJ7Q30sIFxcICBcXG1hdGhiYntDfSBcXHNldG1pbnVzIEsgXFx0ZXh0eyBwYXRoIGNvbm5lY3RlZH0gXFxcXCBmOiBLIFxcdG8gXFxtYXRoYmJ7Q30gXFx0ZXh0eyBjYW4gYmUgdW5pZm9ybWx5IGFwcHJ4aW1hdGVkIGJ5IHBvbHlzfSJdLFs4LDYsIlxcdGV4dHtDaGVieWNoZXYncyBlcXVpcmlwcGxlIGNyaXRlcmlvbn0gIl0sWzgsMjgsIlxcYnVsbGV0Il0sWzgsMSwiZjogWzAsMV0gXFx0byBcXFIsIFxcIFxcdGV4dHtjdHN9IFxcXFwgXFxtYXRoYmJ7RX0oZihTX24vbikpIFxcdG8gZiAodCkgXFx0ZXh0eyB1bmlmb3JtbHksIHdoZXJlIH1TX249XFxzdW1faSBYX2kgXFx0ZXh0eyB3aXRoIH0gKFhfaSlfaSAgXFx0ZXh0eyBpLmkuZCBiZXJudWxsaSB3aXRoIHBhcmFtdGVyIH10Il0sWzksMiwiXFxzdW1faSBmKGkvbikoMS10KV57bi1rfXReayBcXHRvIGYodCkiXSxbOSwwLCJmIFxcdGV4dHsgdW5pZm9ybWx5IGN0c30gXFxpbXBsaWVzICB8Zih4KS1mKHkpfCA8IFxcdmFyZXBzaWxvbiBcXHRleHR7IHdoZW4gfSB8eC15fCA8IFxcZGVsdGEgXFxcXCBcXHRleHR7IHNvIHdlIGhhdmUgfSB8Zih4KS1mKHkpfCBcXGdlcSBcXHZhcmVwc2lsb24gXFxpbXBsaWVzIHx4LXl8XFxnZXEgXFxkZWx0YSBcXFxcIFxcdGV4dHtoZW5jZSB9IFxcbWF0aGJie1B9KHxmKFNfbi9uKS1mKHQpfFxcZ2VxIFxcdmFyZXBzaWxvbikgXFxsZXEgXFxtYXRoYmJ7UH0ofFNfbi9uLXR8XFxnZXEgXFxkZWx0YSkgXFxsZXEgXFxmcmFje1xcdGV4dHtWYXJ9KFhfMSl9e1xcZGVsdGFeMm59IFxcdG8gMCBcXHRleHR7IHVuaWZvcm1seX0gIl0sWzksMSwiXFxzdW1faSBmKGkvbikoMS10KV57bi1rfXReayA9XFxtYXRoYmJ7RX0oZihTX24vbikpIFxcXFwgXFxtYXRoYmJ7RX0oZihTX24vbiktZih0KSk9XFxtYXRoYmJ7RX0ofGYoU19uL24pLWYodCl8MV97fGYoU19uL24pLWYodCl8PCBcXHZhcmVwc2lsb259KStcXG1hdGhiYntFfSh8ZihTX24vbiktZih0KXwxX3t8ZihTX24vbiktZih0KXxcXGdlcSBcXHZhcmVwc2lsb259KSBcXFxcIFxcbGVxIFxcdmFyZXBzaWxvbisgMk1cXG1hdGhiYntQfSh8U19uL24tdHxcXGdlcSBcXGRlbHRhKSBcXHRvIDAiXSxbOSw2LCJcXHRleHR7ZGVnfShwKVxcbGVxIG0tMTxtIDwgbSsxIFxcdGV4dHsgbWFueSBwb2ludHN9IFxcXFwgXFx0ZXh0e3RoZW4gfSBwIFxcdGV4dHsgd2l0aH0gXFxkZWcocCkgX"
+          },
+          {
+            "id": "9bb15c8c-2de7-410d-a791-1c6c3145b4cd",
+            "label": "Probability and Measure",
+            "url": "https://q.uiver.app/#q=WzAsODEsWzAsOCwiKFgsQSxcXG11XzApIl0sWzIsNiwiKFgsMl5YLFxcbXVeKikiXSxbMiw4LCIoWCwyXlgsXFxtdScpIl0sWzIsMTAsIihYLFxcc2lnbWEoQSksXFxtdSkiXSxbNiw2LCIoWCxcXG1hdGhjYWx7TX0sXFxtdV4qfF97XFxtYXRoY2Fse019fSkiXSxbNiwxMCwiKFgsXFxvdmVybGluZXtcXHNpZ21hKEEpfSxcXG92ZXJsaW5le1xcbXV9KSJdLFsxMyw4LCJcXHRleHR7cHJvb2Ygb2YgfSBcXG1hdGhjYWx7TX0oXFxsYW1iZGFeKik9XFxvdmVybGluZXtCKFxcUl5uKX0gXFxcXCAxLiBcXHRleHR7IHNob3cgdGhhdCB9IFxcb3ZlcmxpbmV7Qn09XFx7XFx0ZXh0e3NxdWVlemFibGUgc2V0cyBpbiB9QiBcXH0gXFxcXCAyLiBcXG1hdGhjYWx7TX0gXFxzdWJzZXQgXFx0ZXh0e3NxdWVlemFibGV9LCBcXHRleHR7Ynkgb3V0ZXIgcmVlZ3VsYXJpdHkgYW5kIGZsaXAgaW5zaWRlIGEgY3ViZSwgYW5kIHVuaW9uIHVzaW5nIH1cXHNpZ21hXFx0ZXh0ey1maW5pdGV9IFxcXFwgMy4gXFx0ZXh0eyBzaG93IHRoYXQgfVxcb3ZlcmxpbmV7Qn09QiBcXGN1cCBcXG1hdGhjYWx7Tn0sIFxcdGV4dHsgYW5kIHVuaW9uIHdpdGggfU4gXFx0ZXh0eyB3b24ndCBjaGFuZ2UgdGhlIGNhcmF0aGVvZG9yeSBjb25kaXRpb24gfSJdLFsxMywxMiwiWCBcXHRleHR7IG1ldHJpYyBzcGFjZX0sIFxcbXUgXFx0ZXh0eyBmaW5pdGUgbWVhc3VyZX0gXFxcXCBcXGltcGxpZXMgWCBcXHRleHR7IGlzIHJlZ3VsYXJ9Il0sWzEzLDEwLCJcXGxhbWJkYV4qIFxcdGV4dHsgaXMgKHN0cm9uZykgcmVndWxhciwgYnkgdGhlIGFib3ZlIHByb29mfSJdLFsxNCwxMiwiWCBcXHRleHR7IGNvbXBhY3QgbWV0cmljIHNwYWNlfSwgXFxtdSBcXHRleHR7IGZpbml0ZSBtZWFzdXJlfSBcXFxcIFxcaW1wbGllcyBYIFxcdGV4dHsgaXMgKHN0cm9uZ2x5KSByZWd1bGFyfSJdLFsxMiwxMiwiXFx7MFxcfSBcXGN1cCBcXHsxL258biBcXGluIFxcTlxcfSwgXFwgXFx0ZXh0e3RoZW4gfSBcXHswXFx9IFxcdGV4dHsgY2FuJ3QgYmUgYXBwcm94aW1hdGVkIGZyb20gdGhlIG91dGlzZGV9IFxcXFwgXFx0ZXh0e3dlIGFyZSBnaXZpbmcgdGhlIGNvdW50aW5nIG1lYXN1cmUsIG5vdGUgdGhlIGZpbml0ZW5lc3MgbWF0dGVycyF9Il0sWzUsOSwiXFxpbnRfe3JpZX0gZj1cXGludF97bGVifSBcXHRleHR7IG9uIH1bYSxiXSJdLFswLDE2XSxbMTMsMTcsIlxcdGV4dHtNb25vdG9uZSBjb252ZXJnZW5jZSB0aGVvcmVtfSBcXFxcIDAgXFxsZXEgZl9uIFxcdXBhcnJvdyBmICwgXFxpbXBsaWVzIFxcaW50IGZfbiBcXHVwYXJyb3cgXFxpbnQgZiAgXFxcXCAxLiBcXCBcXGludCBmX24gXFxsZXEgXFxpbnQgZiBcXGltcGxpZXMgXFxsaW0gXFxpbnQgZl9uIFxcbGVxIFxcaW50IGYgXFxcXCAyLiBcXCBcXHRleHR7dGFrZSBzaW1wbGUgfTBcXGxlcSBnIFxcbGVxIGYgXFx0ZXh0eyBhbmQgfWMgXFxpbiAoMCwxKSBcXGltcGxpZXMgMCBcXGxlcSBjZyA8ZiBcXFxcIEFfbj1cXHt4X"
+          }
+        ],
         "pdfs": [],
         "items": []
       },
@@ -262,15 +331,15 @@
     "backgroundImage": "",
     "blocks": [
       {
-        "id": "cv-education",
-        "type": "list",
+        "id": "33a3e007-9e51-452a-8c08-09e24a93b547",
+        "type": "text",
         "tone": "sky",
         "size": "half",
         "fontStyle": "clean",
         "textColor": "default",
         "titleSize": 0,
         "eyebrow": "",
-        "title": "Education",
+        "title": "CV",
         "body": "",
         "meta": "",
         "imageSrc": "",
@@ -282,38 +351,14 @@
         "pdfLabel": "",
         "pdfSrc": "",
         "links": [],
-        "pdfs": [],
-        "items": [
-          "Mathematical Tripos, Part III ||| 2026 ~ Current · University of Cambridge ",
-          "Mathematical Tripos, Parts IA–II ||| 2023 ~ 2026,  University of Cambridge, Part II rank: 20/250 (top 8%)"
-        ]
-      },
-      {
-        "id": "cv-research",
-        "type": "list",
-        "tone": "lilac",
-        "size": "half",
-        "fontStyle": "clean",
-        "textColor": "black",
-        "titleSize": 0,
-        "eyebrow": "",
-        "title": "Research",
-        "body": "",
-        "meta": "",
-        "imageSrc": "",
-        "imageAlt": "",
-        "imageHeight": 400,
-        "heroImageSize": 300,
-        "linkLabel": "",
-        "linkUrl": "",
-        "pdfLabel": "",
-        "pdfSrc": "",
-        "links": [],
-        "pdfs": [],
-        "items": [
-          "General relativity and black holes||| · Supervised by Professor Mihalis Dafermos",
-          "Low-dimensional topology|||Handle decompositions, Morse functions, and surface topology"
-        ]
+        "pdfs": [
+          {
+            "id": "44a83091-941f-4ec1-b7e4-af89bc7c8138",
+            "label": "Zheng Jiang CV",
+            "src": "/uploads/1789838966575-Zheng-Jiang-CV-e5d87c.pdf"
+          }
+        ],
+        "items": []
       }
     ]
   },
@@ -343,6 +388,36 @@
         "pdfLabel": "",
         "pdfSrc": "",
         "links": [],
+        "pdfs": [],
+        "items": []
+      },
+      {
+        "id": "cd970fd6-40c7-45a7-a60a-10c3638d3acd",
+        "type": "text",
+        "tone": "sky",
+        "size": "half",
+        "fontStyle": "clean",
+        "textColor": "default",
+        "titleSize": 0,
+        "eyebrow": "Visualisation ",
+        "title": "Desmos Projects",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "imageHeight": 400,
+        "heroImageSize": 300,
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [
+          {
+            "id": "95abfe58-72da-4fb3-ae94-856f6992604d",
+            "label": "github link",
+            "url": "https://github.com/SINXequalsX/Desmos-Proj-"
+          }
+        ],
         "pdfs": [],
         "items": []
       }
