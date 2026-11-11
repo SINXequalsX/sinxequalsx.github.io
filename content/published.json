@@ -56,10 +56,10 @@
         "items": []
       },
       {
-        "id": "bdffcff3-c42d-4a66-b5c7-3d3f6227ccba",
-        "type": "image",
+        "id": "dd8e6aec-2993-4ef0-94fd-b6cc27253e8c",
+        "type": "gallery",
         "tone": "white",
-        "size": "half",
+        "size": "full",
         "fontStyle": "clean",
         "textColor": "default",
         "titleSize": 0,
@@ -67,32 +67,8 @@
         "title": "",
         "body": "",
         "meta": "",
-        "imageSrc": "/uploads/1788353593768-Zheng-a5bd6e.jpg",
-        "imageAlt": "Zheng",
-        "imageHeight": 420,
-        "heroImageSize": 300,
-        "linkLabel": "",
-        "linkUrl": "",
-        "pdfLabel": "",
-        "pdfSrc": "",
-        "links": [],
-        "pdfs": [],
-        "items": []
-      },
-      {
-        "id": "80b405b6-1dcc-42ec-9e62-77ffacc55eb4",
-        "type": "image",
-        "tone": "mint",
-        "size": "half",
-        "fontStyle": "clean",
-        "textColor": "default",
-        "titleSize": 0,
-        "eyebrow": "",
-        "title": "",
-        "body": "",
-        "meta": "",
-        "imageSrc": "/uploads/1788357534308-patrick-efe600.jpg",
-        "imageAlt": "patrick",
+        "imageSrc": "",
+        "imageAlt": "",
         "imageHeight": 400,
         "heroImageSize": 300,
         "linkLabel": "",
@@ -101,7 +77,22 @@
         "pdfSrc": "",
         "links": [],
         "pdfs": [],
-        "items": []
+        "items": [],
+        "galleryLayout": "grid",
+        "galleryImages": [
+          {
+            "id": "48fe54b4-1954-4747-8b75-8565daabaa76",
+            "src": "/uploads/gallery-3e0ef789166e66d686934bd3.jpg",
+            "alt": "Zheng",
+            "caption": ""
+          },
+          {
+            "id": "6b91cce4-8f89-4ec1-a378-ddae99bf8434",
+            "src": "/uploads/gallery-19f5ede3795efcb430d0e5cb.jpg",
+            "alt": "patrick",
+            "caption": ""
+          }
+        ]
       }
     ]
   },
