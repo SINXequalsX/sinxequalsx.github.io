@@ -22,7 +22,7 @@
     },
     {
       "id": "photos",
-      "label": "Photos",
+      "label": "Random Stuffs",
       "slug": "photos"
     }
   ],
@@ -41,7 +41,7 @@
         "titleSize": 0,
         "eyebrow": "",
         "title": "Zheng Jiang",
-        "body": "My name is Zheng Jiang, but you can also call me Peter, the Chinese character 正(Zheng) means integrity and honesty. The logo down below is the cursive script of \"正\", designed by myself. \\\\\\ \\\\\\\nI am a Cambridge mathematician doing Part III. I am interested in differential geometry, low-dimensional topology, gravitation and mathematical physics.  \\\\\\\n\\\\\\\n\n\n",
+        "body": "My name is Zheng Jiang, but you can also call me Peter, the Chinese character 正(Zheng) means integrity and honesty. The logo down below is the cursive script of \"正\", designed by myself. \\\\\\ \\\\\\\nI am a Cambridge mathematician doing Part III. I am interested in differential geometry, general relativity, low-dimensional topology, geometric topology, analysis, and mathematical physics.  \\\\\\\n\\\\\\\n\n\n",
         "meta": "",
         "imageSrc": "/uploads/1788350891203-peter-bbe864.jpg",
         "imageAlt": "peter",
@@ -353,9 +353,9 @@
         "links": [],
         "pdfs": [
           {
-            "id": "44a83091-941f-4ec1-b7e4-af89bc7c8138",
-            "label": "Zheng Jiang CV",
-            "src": "/uploads/1789838966575-Zheng-Jiang-CV-e5d87c.pdf"
+            "id": "34bf3f07-21b1-4696-b2d7-d23bfb17a7e4",
+            "label": "Zheng_Jiang_cv",
+            "src": "/uploads/1794364390801-Zheng_Jiang_cv-3ea32e.pdf"
           }
         ],
         "items": []
@@ -424,7 +424,7 @@
     ]
   },
   "photos": {
-    "title": "Photos",
+    "title": "Random Stuffs",
     "intro": "A visual notebook for places, seminars, blackboards, and moments alongside mathematics.",
     "backgroundImage": "",
     "blocks": [
@@ -437,7 +437,7 @@
         "textColor": "default",
         "titleSize": 0,
         "eyebrow": "",
-        "title": "Photos",
+        "title": "Drawings",
         "body": "",
         "meta": "",
         "imageSrc": "",
