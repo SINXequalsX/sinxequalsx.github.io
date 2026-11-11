@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { renderGallery } from '../public/gallery.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -18,7 +19,7 @@ const defaultPages = [
   ['photos', 'photos', 'Photos'],
 ];
 const pages = Array.isArray(content.navigation) ? content.navigation.filter(item => item && content[item.id]?.blocks).map(item => [item.id,item.slug || '',item.label || 'Untitled']) : defaultPages;
-const allowedTypes = new Set(['hero', 'text', 'image', 'feature', 'list', 'quote']);
+const allowedTypes = new Set(['hero', 'text', 'image', 'feature', 'list', 'quote', 'gallery']);
 const allowedTones = new Set(['white', 'sky', 'mint', 'lilac', 'peach']);
 const allowedSizes = new Set(['full', 'half', 'third']);
 const allowedFonts = new Set(['clean', 'bold', 'rounded', 'serif']);
@@ -81,6 +82,7 @@ function renderBlock(raw) {
   const body = raw.body ? `<p class="block-copy">${formatText(raw.body)}</p>` : '';
   const meta = raw.meta ? `<span class="status-pill">${escapeHtml(raw.meta)}</span>` : '';
 
+  if (type === 'gallery') return renderGallery(raw, {classes, titleStyle, heading:eyebrow + title + body});
   if (type === 'image') {
     const imageHeight = Math.min(900, Math.max(220, Number(raw.imageHeight) || 400));
     const src = safeImageSource(raw.imageSrc);
@@ -135,6 +137,7 @@ function renderPage(key, page, slug, label) {
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css?v=${siteCssVersion}">
   <script src="/theme.js"></script>
+  ${blocks.includes('class="gallery-images ') ? '<script type="module" src="/gallery-viewer.js"></script>' : ''}
   <title>${escapeHtml(page.title || label)} · Peter Jiang</title>
 </head>
 <body>

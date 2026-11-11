@@ -1,7 +1,9 @@
+import { installGalleryLightbox, renderGallery } from '/gallery.js';
+
 const root = document.querySelector('#preview-root');
 const channel = 'BroadcastChannel' in window ? new BroadcastChannel('peter-editor-preview') : null;
 const defaultPages = [['intro','Introduction'],['notes','Notes'],['cv','CV'],['projects','Projects'],['photos','Photos']];
-const allowedTypes = new Set(['hero','text','image','feature','list','quote']);
+const allowedTypes = new Set(['hero','text','image','feature','list','quote','gallery']);
 const allowedTones = new Set(['white','sky','mint','lilac','peach']);
 const allowedSizes = new Set(['full','half','third']);
 const allowedFonts = new Set(['clean','bold','rounded','serif']);
@@ -35,6 +37,7 @@ function renderBlock(raw) {
   const title = raw.title ? (type === 'quote' ? `<blockquote>${formatText(raw.title)}</blockquote>` : `<h2>${formatText(raw.title)}</h2>`) : '';
   const body = raw.body ? `<p class="block-copy">${formatText(raw.body)}</p>` : '';
   const meta = raw.meta ? `<span class="status-pill">${escapeHtml(raw.meta)}</span>` : '';
+  if (type === 'gallery') return renderGallery(raw, {classes, titleStyle, heading:eyebrow + title + body, preview:true});
   if (type === 'image') {
     const imageHeight = Math.min(900,Math.max(220,Number(raw.imageHeight) || 400));
     const source = safeImageSource(raw.imageSrc);
@@ -81,4 +84,5 @@ function readStoredPreview() {
 window.addEventListener('message', event => { if (event.origin === location.origin && event.data?.type === 'peter-preview-state') render(event.data.state); });
 window.addEventListener('storage', event => { if (event.key === 'peter-live-preview' && event.newValue) { try { render(JSON.parse(event.newValue)); } catch {} } });
 channel?.addEventListener('message', event => { if (event.data?.type === 'state') render(event.data.state); });
+installGalleryLightbox();
 readStoredPreview();

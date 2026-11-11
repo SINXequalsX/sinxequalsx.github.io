@@ -4,7 +4,7 @@ if (token) sessionStorage.setItem('peter-editor-token', token);
 const defaultTabs = [['intro','Introduction',''],['notes','Notes','notes'],['cv','CV','cv'],['projects','Projects','projects'],['photos','Photos','photos']];
 let tabs = defaultTabs.map(item => [...item]);
 const blockChoices = [
-  ['hero','Title'],['text','Text'],['image','Photo'],
+  ['hero','Title'],['text','Text'],['image','Photo'],['gallery','Gallery'],
   ['quote','Quote'],['list','List'],
 ];
 const blockLabels = {...Object.fromEntries(blockChoices),feature:'Highlight',list:'List'};
@@ -12,6 +12,9 @@ const tones = ['white','sky','mint','lilac','peach'];
 const sizes = ['full','half','third'];
 const fonts = [['clean','Clean'],['bold','Bold'],['rounded','Rounded'],['serif','Serif']];
 const textColors = [['default','Default'],['black','Black'],['white','White'],['gray','Gray'],['blue','Blue'],['red','Red']];
+const galleryLimit = 100;
+const galleryImageTypes = '.jpg,.jpeg,.png,.webp,.gif,.avif';
+const galleryImagePath = /^\/uploads\/[a-zA-Z0-9_-][a-zA-Z0-9._-]*\.(?:jpe?g|png|webp|gif|avif)$/i;
 let content, active = 'intro', openPicker = null, busy = false;
 const statusElement = document.querySelector('#status');
 const feedbackElement = document.querySelector('#save-feedback');
@@ -54,7 +57,7 @@ function setStatus(message, kind = 'idle') {
 }
 function setBusy(next) { busy = next; document.querySelectorAll('#save-draft,#publish').forEach(button => button.disabled = next); }
 function authHeaders(extra = {}) { return {'x-editor-token':token, ...extra}; }
-function newBlock(type) { return { id:crypto.randomUUID(), type, tone:type === 'image' ? 'white' : 'sky', size:['hero','quote'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', titleSize:0, eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, heroImageSize:300, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [] }; }
+function newBlock(type) { return { id:crypto.randomUUID(), type, tone:['image','gallery'].includes(type) ? 'white' : 'sky', size:['hero','quote','gallery'].includes(type) ? 'full' : 'half', fontStyle:'clean', textColor:'default', titleSize:0, eyebrow:'', title:type === 'hero' ? 'A clear new beginning' : '', body:'', meta:'', imageSrc:'', imageAlt:'', imageHeight:400, heroImageSize:300, links:[], pdfs:[], items:type === 'list' ? ['First item'] : [], ...(type === 'gallery' ? {galleryLayout:'grid',galleryImages:[]} : {}) }; }
 
 function normalizeAttachments(siteContent) {
   const storedNavigation = Array.isArray(siteContent.navigation) ? siteContent.navigation : defaultTabs.map(([id,label,slug]) => ({id,label,slug}));
@@ -69,6 +72,10 @@ function normalizeAttachments(siteContent) {
       block.imageHeight = Math.min(900,Math.max(220,Number(block.imageHeight) || 400));
       block.heroImageSize = Math.min(600,Math.max(140,Number(block.heroImageSize) || 300));
       block.titleSize = Number(block.titleSize) ? Math.min(180,Math.max(32,Number(block.titleSize))) : 0;
+      if (block.type === 'gallery') {
+        block.galleryLayout = block.galleryLayout === 'stack' ? 'stack' : 'grid';
+        block.galleryImages = Array.isArray(block.galleryImages) ? block.galleryImages.slice(0,galleryLimit).filter(image => galleryImagePath.test(image?.src ?? '')).map(image => ({id:image.id || crypto.randomUUID(),src:image.src,alt:image.alt || '',caption:image.caption || ''})) : [];
+      }
       if (!block.links.length && (block.linkLabel || block.linkUrl)) block.links.push({id:crypto.randomUUID(),label:block.linkLabel || '',url:block.linkUrl || ''});
       if (!block.pdfs.length && (block.pdfLabel || block.pdfSrc)) block.pdfs.push({id:crypto.randomUUID(),label:block.pdfLabel || '',src:block.pdfSrc || ''});
       if (block.type === 'list' && Array.isArray(block.items)) block.items = block.items.map(item => { const parts = String(item).split('|||'); return parts.length > 2 ? `${parts[1]}|||${parts[0]} · ${parts.slice(2).join(' · ')}` : item; });
@@ -82,7 +89,7 @@ function previewState() { return {content,active,theme:document.documentElement.
 function syncPreview() {
   if (!content) return;
   const state = previewState();
-  localStorage.setItem('peter-live-preview',JSON.stringify(state));
+  try { localStorage.setItem('peter-live-preview',JSON.stringify(state)); } catch {}
   previewFrame.contentWindow?.postMessage({type:'peter-preview-state',state},location.origin);
   previewChannel?.postMessage({type:'state',state});
 }
@@ -93,6 +100,7 @@ function field(label, value, options = {}) {
   const title = document.createElement('span'); title.textContent = label;
   const control = options.multiline ? document.createElement('textarea') : document.createElement('input');
   if (options.multiline) control.rows = options.rows || 3;
+  if (options.maxLength) control.maxLength = options.maxLength;
   control.value = value || ''; control.addEventListener('input', () => { options.onInput(control.value); markDirty(); });
   wrapper.append(title, control); return wrapper;
 }
@@ -273,6 +281,73 @@ function renderTextOptions(block) {
   options.append(link,pdf); return options;
 }
 
+function renderGalleryOptions(block) {
+  const group = document.createElement('div'); group.className = 'gallery-edit wide';
+  const header = document.createElement('div'); header.className = 'gallery-edit-header';
+  const count = document.createElement('strong');
+  const layoutLabel = document.createElement('label'); layoutLabel.textContent = 'Layout';
+  const layout = document.createElement('select');
+  layout.setAttribute('aria-label','Gallery layout');
+  layout.add(new Option('Grid','grid')); layout.add(new Option('Stack vertically','stack')); layout.value = block.galleryLayout;
+  layout.addEventListener('change',() => { block.galleryLayout = layout.value; markDirty(); });
+  layoutLabel.append(layout); header.append(count,layoutLabel);
+
+  const upload = document.createElement('label'); upload.className = 'gallery-upload';
+  const uploadText = document.createElement('strong'); uploadText.textContent = '+ Upload photos or drawings';
+  const hint = document.createElement('span'); hint.textContent = 'Select several at once · JPG, PNG, WebP, GIF or AVIF · up to 15 MB each';
+  const input = document.createElement('input'); input.type = 'file'; input.multiple = true; input.accept = galleryImageTypes; input.setAttribute('aria-label','Upload photos or drawings');
+  input.addEventListener('change',async () => {
+    const files = Array.from(input.files ?? []); input.value = '';
+    if (!files.length || busy) return;
+    input.disabled = true;
+    await uploadGalleryImages(block,files);
+    input.disabled = block.galleryImages.length >= galleryLimit;
+    renderImages();
+  });
+  upload.append(uploadText,hint,input);
+  const list = document.createElement('ol'); list.className = 'gallery-edit-list';
+  const combinable = content[active].blocks.filter(other => other.type === 'image' && galleryImagePath.test(other.imageSrc ?? '') && !other.title && !other.body && !other.eyebrow);
+  let combine;
+  if (combinable.length) {
+    combine = makeButton(`Combine ${combinable.length} existing photo boxes`,'Move photo-only boxes on this page into this gallery',() => {
+      if (combinable.length + block.galleryImages.length > galleryLimit) { setStatus(`Only ${galleryLimit} images fit in one gallery.`,'error'); return; }
+      if (!confirm(`Move these ${combinable.length} existing photo boxes into this gallery? Their photos and image descriptions will be kept.`)) return;
+      block.galleryImages.push(...combinable.map(image => ({id:crypto.randomUUID(),src:image.imageSrc,alt:image.imageAlt || '',caption:''})));
+      content[active].blocks = content[active].blocks.filter(other => !combinable.includes(other));
+      renderBlocks(); markDirty();
+    });
+    combine.className = 'gallery-combine';
+  }
+  function renderImages(focusIndex) {
+    count.textContent = `${block.galleryImages.length} ${block.galleryImages.length === 1 ? 'image' : 'images'} in this gallery`;
+    input.disabled = block.galleryImages.length >= galleryLimit;
+    uploadText.textContent = input.disabled ? `Gallery full · ${galleryLimit} images` : '+ Upload photos or drawings';
+    list.replaceChildren(...block.galleryImages.map((image,index) => {
+      const row = document.createElement('li'); row.className = 'gallery-edit-image';
+      const thumbnail = document.createElement('img'); thumbnail.src = image.src; thumbnail.alt = ''; thumbnail.loading = 'lazy';
+      const details = document.createElement('div'); details.className = 'gallery-image-fields';
+      const position = document.createElement('strong'); position.textContent = `Image ${index+1}`;
+      details.append(position,
+        field('Caption (optional)',image.caption,{maxLength:300,onInput:value => { image.caption = value; }}),
+        field('Image description (alt text)',image.alt,{maxLength:500,onInput:value => { image.alt = value; }}));
+      const actions = document.createElement('div'); actions.className = 'gallery-edit-actions';
+      const reorder = delta => {
+        const next = index+delta;
+        [block.galleryImages[index],block.galleryImages[next]] = [block.galleryImages[next],block.galleryImages[index]];
+        renderImages(next); markDirty();
+      };
+      const earlier = makeButton('↑',`Move image ${index+1} earlier`,() => reorder(-1),index === 0);
+      const later = makeButton('↓',`Move image ${index+1} later`,() => reorder(1),index === block.galleryImages.length-1);
+      const remove = makeButton('Remove',`Remove image ${index+1} from gallery`,() => { block.galleryImages.splice(index,1); renderImages(Math.min(index,block.galleryImages.length-1)); markDirty(); });
+      [earlier,later,remove].forEach(button => button.setAttribute('aria-label',button.title));
+      actions.append(earlier,later,remove); row.append(thumbnail,details,actions); return row;
+    }));
+    list.hidden = !block.galleryImages.length;
+    if (focusIndex != null) (list.children[focusIndex]?.querySelector('button:not(:disabled)') ?? input).focus();
+  }
+  renderImages(); group.append(header,upload,...(combine ? [combine] : []),list); return group;
+}
+
 function renderBlock(block, index) {
   const card = document.createElement('article'); card.className = `modular-editor-card tone-${block.tone}`;
   const toolbar = document.createElement('div'); toolbar.className = 'block-editor-toolbar'; toolbar.innerHTML = `<div><span class="block-type-label">${escapeHtml(blockLabels[block.type] || block.type)}</span><span>Box ${index + 1}</span></div>`;
@@ -287,7 +362,7 @@ function renderBlock(block, index) {
   textColors.forEach(([value,label]) => colorSelect.add(new Option(label,value,false,(block.textColor || 'default') === value))); colorSelect.addEventListener('change',() => { block.textColor = colorSelect.value; markDirty(); }); colorLabel.append(colorSelect);
   controls.append(toneLabel,sizeLabel,fontLabel,colorLabel,
     makeButton('↑','Move up',() => move(index,-1),index === 0), makeButton('↓','Move down',() => move(index,1),index === content[active].blocks.length-1),
-    makeButton('Duplicate','Duplicate block',() => { content[active].blocks.splice(index+1,0,{...block,id:crypto.randomUUID(),items:[...block.items],links:block.links.map(item => ({...item,id:crypto.randomUUID()})),pdfs:block.pdfs.map(item => ({...item,id:crypto.randomUUID()}))}); renderBlocks(); markDirty(); }),
+    makeButton('Duplicate','Duplicate block',() => { content[active].blocks.splice(index+1,0,{...block,id:crypto.randomUUID(),items:[...block.items],links:block.links.map(item => ({...item,id:crypto.randomUUID()})),pdfs:block.pdfs.map(item => ({...item,id:crypto.randomUUID()})),...(block.type === 'gallery' ? {galleryImages:block.galleryImages.map(item => ({...item,id:crypto.randomUUID()}))} : {})}); renderBlocks(); markDirty(); }),
   );
   const remove = makeButton('Delete','Delete block',() => { if (confirm('Delete this block?')) { content[active].blocks.splice(index,1); renderBlocks(); markDirty(); } }); remove.className = 'remove-block'; controls.append(remove); toolbar.append(controls); card.append(toolbar);
   const fields = document.createElement('div'); fields.className = 'block-fields';
@@ -299,6 +374,7 @@ function renderBlock(block, index) {
   if (block.type !== 'quote') fields.append(renderTitleSizeControl(block));
   if (['hero','feature'].includes(block.type)) fields.append(field('Small label / metadata',block.meta,{wide:true,onInput:value => block.meta = value}));
   if (block.type === 'text') fields.append(renderTextOptions(block));
+  if (block.type === 'gallery') fields.append(renderGalleryOptions(block));
   if (block.type === 'list') fields.append(field('Items — one per line; use Title|||Description; three backslashes break a line inside an item',block.items.join('\n'),{wide:true,multiline:true,rows:6,onInput:value => block.items = value.split('\n').filter(Boolean)}));
   if (['image','hero'].includes(block.type)) {
     fields.append(field(block.type === 'hero' ? 'Title photo description (alt text)' : 'Image description (alt text)',block.imageAlt,{wide:true,onInput:value => block.imageAlt = value}));
@@ -331,6 +407,35 @@ async function uploadImage(block,file) {
     const result = await response.json().catch(() => ({})); if (!response.ok) throw new Error(result.error || 'Upload failed.');
     block.imageSrc = result.path; if (!block.imageAlt) block.imageAlt = file.name.replace(/\.[^.]+$/,''); renderBlocks(); markDirty();
   } catch (error) { setStatus(error.message || 'Upload failed.','error'); } finally { setBusy(false); }
+}
+
+async function uploadGalleryImages(block,files) {
+  if (busy) return;
+  const room = galleryLimit-block.galleryImages.length;
+  if (room <= 0) { setStatus(`A gallery can contain up to ${galleryLimit} images.`,'error'); return; }
+  const chosen = files.slice(0,room);
+  const failures = [];
+  let added = 0;
+  setBusy(true);
+  try {
+    for (const [index,file] of chosen.entries()) {
+      setStatus(`Uploading images ${index+1} of ${chosen.length}…`);
+      try {
+        if (file.size > 15*1024*1024) throw new Error('maximum size is 15 MB');
+        const response = await fetch('/api/upload-gallery',{method:'POST',headers:authHeaders({'content-type':file.type || 'application/octet-stream','x-file-name':encodeURIComponent(file.name)}),body:file});
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !galleryImagePath.test(result.path ?? '')) throw new Error(result.error || 'upload failed');
+        const alt = file.name.replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').slice(0,500);
+        block.galleryImages.push({id:crypto.randomUUID(),src:result.path,alt,caption:''});
+        added++;
+      } catch (error) { failures.push(`${file.name}: ${error.message}`); }
+    }
+  } finally { setBusy(false); }
+  if (added) markDirty();
+  if (failures.length || files.length > chosen.length) {
+    const summary = [added ? `${added} added. Save draft to keep them.` : '',...failures.slice(0,2),failures.length > 2 ? `${failures.length-2} more failed.` : '',files.length > chosen.length ? `Only ${galleryLimit} images fit in one gallery.` : ''];
+    setStatus(summary.filter(Boolean).join(' '),'error');
+  }
 }
 
 async function uploadBackground(file) {

@@ -13,6 +13,12 @@ This repository publishes [sinxequalsx.github.io](https://sinxequalsx.github.io)
 
 No database, public login, or online editor is used. The public site contains only static files.
 
+## Galleries
+
+Choose **+ → Gallery** to put multiple photos or drawings in one box. Select several images together, add optional captions, and use the arrows to arrange them. Choose **Grid** or **Stack vertically**; clicking an image opens the complete, uncropped photo with previous/next controls. Escape closes the viewer.
+
+Each gallery supports up to 100 images (15 MB each). New gallery uploads stay in ignored local draft storage until you publish a gallery that uses them. **Save draft** keeps the gallery locally; **Publish to GitHub** publishes its images and layout.
+
 ## Build only
 
 Run `npm run build`. The generated site is written to `dist/`.
