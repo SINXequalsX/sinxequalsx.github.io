@@ -135,7 +135,7 @@
         "titleSize": 0,
         "eyebrow": "literature review",
         "title": "The Kirby torus trick for surfaces",
-        "body": "",
+        "body": "Supervised by Dr. Gareth Wilkes",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
@@ -170,7 +170,7 @@
         "titleSize": 0,
         "eyebrow": "Literature review",
         "title": "Black Holes ",
-        "body": "Introduction to Black Hole Uniqueness Theorem is under construction",
+        "body": "Supervised by Prof. Mihalis Dafermos.\n\nIntroduction to Black Hole Uniqueness Theorem is under construction",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
@@ -183,9 +183,9 @@
         "links": [],
         "pdfs": [
           {
-            "id": "9ddcdfc7-f26f-4ecf-af20-8bf6c361c12b",
-            "label": "Penrose singularity theorem proof zheng",
-            "src": "/uploads/1789839278057-Penrose-singularity-theorem-proof-zheng-133c7e.pdf"
+            "id": "ffc9576b-8fa9-46d8-a355-74a392c5a7a5",
+            "label": "Penrose's Singularity Theorem Zheng",
+            "src": "/uploads/1794589374568-Penrose-s-Singularity-Theorem-Zheng-495947.pdf"
           }
         ],
         "items": []
