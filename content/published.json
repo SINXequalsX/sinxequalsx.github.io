@@ -22,8 +22,13 @@
     },
     {
       "id": "photos",
-      "label": "Random Stuffs",
+      "label": "Art",
       "slug": "photos"
+    },
+    {
+      "id": "page-ad923e36",
+      "label": "Blog",
+      "slug": "blog"
     }
   ],
   "intro": {
@@ -170,7 +175,7 @@
         "titleSize": 0,
         "eyebrow": "Literature review",
         "title": "Black Holes ",
-        "body": "Supervised by Prof. Mihalis Dafermos.\n\nIntroduction to Black Hole Uniqueness Theorem is under construction",
+        "body": "Supervised by Prof. Mihalis Dafermos.\n\nIntroduction to Black Hole Uniqueness Theorems in progress",
         "meta": "",
         "imageSrc": "",
         "imageAlt": "",
@@ -186,6 +191,11 @@
             "id": "ffc9576b-8fa9-46d8-a355-74a392c5a7a5",
             "label": "Penrose's Singularity Theorem Zheng",
             "src": "/uploads/1794589374568-Penrose-s-Singularity-Theorem-Zheng-495947.pdf"
+          },
+          {
+            "id": "0f362fe5-eead-473f-9455-f8b0ec212130",
+            "label": "black_hole_uniqueness_talk",
+            "src": "/uploads/1795632335552-black_hole_uniqueness_talk-6eedfa.pdf"
           }
         ],
         "items": []
@@ -344,9 +354,9 @@
         "links": [],
         "pdfs": [
           {
-            "id": "9ca1c89f-720f-466d-bbfb-140d535fba62",
+            "id": "76cc031d-b672-4ef9-a611-71e5bd233488",
             "label": "Zheng_Jiang_cv",
-            "src": "/uploads/1795062986446-Zheng_Jiang_cv-20056b.pdf"
+            "src": "/uploads/1795632353052-Zheng_Jiang_cv-69d25b.pdf"
           }
         ],
         "items": []
@@ -415,7 +425,7 @@
     ]
   },
   "photos": {
-    "title": "Random Stuffs",
+    "title": "Art",
     "intro": "A visual notebook for places, seminars, blackboards, and moments alongside mathematics.",
     "backgroundImage": "",
     "blocks": [
@@ -481,6 +491,37 @@
             "caption": ""
           }
         ]
+      }
+    ]
+  },
+  "page-ad923e36": {
+    "title": "Blog",
+    "intro": "",
+    "backgroundImage": "",
+    "blocks": [
+      {
+        "id": "f2bd8058-8c4f-4800-8db3-ed08b7898439",
+        "type": "hero",
+        "tone": "sky",
+        "size": "full",
+        "fontStyle": "clean",
+        "textColor": "default",
+        "titleSize": 0,
+        "eyebrow": "",
+        "title": "Blog",
+        "body": "",
+        "meta": "",
+        "imageSrc": "",
+        "imageAlt": "",
+        "imageHeight": 400,
+        "heroImageSize": 300,
+        "linkLabel": "",
+        "linkUrl": "",
+        "pdfLabel": "",
+        "pdfSrc": "",
+        "links": [],
+        "pdfs": [],
+        "items": []
       }
     ]
   }
